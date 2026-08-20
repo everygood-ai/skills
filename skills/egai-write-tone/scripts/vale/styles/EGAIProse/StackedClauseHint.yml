@@ -1,0 +1,8 @@
+extends: existence
+message: "'%s' found. Prose mode wants each sentence to hold one idea — split this into two sentences instead of joining them here."
+level: suggestion
+nonword: true
+tokens:
+  - ';'
+  - '—'
+  - ' -- '

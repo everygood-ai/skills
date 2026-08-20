@@ -1,0 +1,6 @@
+# Gaps
+
+- Whether the source's distinct ideas were actually deduplicated before writing (workflow step 2) cannot be linted — it is a meaning-level judgment, not a pattern match. Workaround: the self-check in each reference file, plus a manual reread for restated content.
+- Whether headings, lists, or tables were used where the content actually called for them cannot be linted — Vale cannot tell "content that is list-shaped" from "content that reads fine as a paragraph." Workaround: the self-check in [references/prose.md](references/prose.md) and [references/terse.md](references/terse.md).
+- Compact mode's requirement to preserve negation and logical connectives is a meaning-preservation check, not a pattern match, so it cannot be linted. Workaround: the "Never compress away" list and self-check in [references/compact.md](references/compact.md).
+- Compact mode's symbol-legend rule (define a symbol once before first use) is only a reminder — `SymbolLegendReminder.yml` flags `→`/`!=` for a human look, but Vale cannot confirm a legend actually exists or that a symbol is used consistently. This is a known weak spot: testing found the model does not reliably self-correct it even when the rule is stated explicitly. Treat any `compact` output that uses a symbol as needing a manual legend check.

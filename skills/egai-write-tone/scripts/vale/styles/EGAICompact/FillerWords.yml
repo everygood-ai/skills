@@ -1,0 +1,15 @@
+extends: existence
+message: "Filler word ('%s') adds no decision-relevant information. Cut it to compress further."
+level: suggestion
+ignorecase: true
+tokens:
+  - '\bvery\b'
+  - '\breally\b'
+  - '\bbasically\b'
+  - '\bessentially\b'
+  - '\bactually\b'
+  - '\bsimply\b'
+  - '\bjust\b'
+  - '\bquite\b'
+  - '\bin order to\b'
+  - '\bdue to the fact that\b'
