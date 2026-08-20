@@ -1,0 +1,6 @@
+extends: occurrence
+message: "This sentence runs 30+ words. Prose mode targets one idea per sentence, roughly 10-20 words — check whether it holds more than one before leaving it this long."
+level: suggestion
+scope: sentence
+max: 30
+token: '\S+'

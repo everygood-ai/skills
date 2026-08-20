@@ -1,0 +1,6 @@
+extends: existence
+message: "Semicolon found. Terse mode wants one idea per line — split this into two lines instead."
+level: warning
+nonword: true
+tokens:
+  - ';'

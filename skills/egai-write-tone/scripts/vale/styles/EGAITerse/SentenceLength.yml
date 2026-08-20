@@ -1,0 +1,6 @@
+extends: occurrence
+message: "This line runs 25+ words. Terse mode wants one idea per line — check whether it holds more than one, and split if so."
+level: warning
+scope: sentence
+max: 25
+token: '\S+'

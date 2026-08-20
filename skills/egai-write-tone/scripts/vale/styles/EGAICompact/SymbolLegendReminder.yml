@@ -1,0 +1,7 @@
+extends: existence
+message: "Symbol ('%s') found. Confirm it is defined once in a legend before its first use, and used the same way everywhere in this document."
+level: suggestion
+nonword: true
+tokens:
+  - '→'
+  - '!='

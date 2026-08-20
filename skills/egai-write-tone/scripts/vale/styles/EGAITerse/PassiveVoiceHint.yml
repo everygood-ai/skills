@@ -1,0 +1,6 @@
+extends: existence
+message: "Possible passive voice ('%s'). Use active voice unless this is descriptive text with an unknown agent."
+level: suggestion
+ignorecase: true
+tokens:
+  - '\b(is|are|was|were|be|been|being)\s+\w+(ed|en)\b'
