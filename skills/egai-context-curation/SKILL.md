@@ -2,7 +2,7 @@
 name: egai-context-curation
 description: Build and maintain compact, evidence-based Markdown context for a project or codebase area. Use when asked to extract context from scratch, update context after source changes, improve existing context quality, or audit context for stale claims. Do not use for implementation planning, code changes, or general documentation that is not maintained as project context.
 metadata:
-  version: "3.1.0"
+  version: "3.1.1"
 ---
 
 # EGAI Context Curation
@@ -108,6 +108,8 @@ Use to compare existing context against the current source tree.
 
 Inspect more than one context file when a change crosses concerns. Do not update a file merely because it appears in the mapping. Update it only when its current claims or useful coverage changed.
 
+A flow's concrete technical detail (endpoints, queues, auth mechanisms, library names) belongs in `architecture.md`. The same flow's domain meaning (entity state changes, business decisions, user intent) belongs in `domain.md`. When a flow spans both, record the technical detail once, in `architecture.md`, and give `domain.md` only the domain-level shape.
+
 ## Context Set
 
 ### Lock file
@@ -179,7 +181,7 @@ Exclude full file lists, dependency trees, and code snippets. Keep the file unde
 
 Always captured. Include:
 
-- Key folders or files grouped by purpose.
+- Key folders or files grouped by purpose, named by purpose or file path rather than an internal identifier such as a component, class, hook, or variable name. Those identifiers drift on rename.
 - Significant runtime flows expressed from source through major steps to destination.
 - External or cross-area integration points.
 
@@ -209,7 +211,7 @@ Exclude business rules, generic engineering advice, and rules already present in
 Always captured. Include:
 
 - Exact test commands, or state that no test suite exists.
-- Framework and version when established.
+- Framework and version, captured only when reaching them takes more than the manifest: a version pinned outside it, a non-obvious dependency combination, or required setup such as stub order, transform inclusions, or mandatory global mocks.
 - Test file and case naming conventions.
 - Explicit coverage requirements when present.
 - Non-obvious, high-risk scenarios that require protection.
@@ -245,6 +247,8 @@ Omit `[CONTEXT_FILE ...]` to validate every `.md` file present in the context di
 
 - Prefer one short bullet and a source path over a paragraph that restates implementation.
 - Keep every claim verifiable against current project evidence.
+- Capture a fact only when reaching it requires reading multiple files or inferring a relationship no single file states outright.
+- In `architecture.md` and `domain.md`, state what exists. An absence claim such as "No Redux" drifts silently once the project adopts the pattern, because nothing about adoption removes it. Route a deliberate prohibition through `rules.md` instead, as a `MUST NOT` with its reason.
 - Do not copy implementation blocks. Use exact syntax only when a one-line identifier or command is necessary.
 - Keep each fact in one context file and link related material instead of duplicating it.
 - Treat the context as current state. Remove contradicted, renamed, or obsolete information.
