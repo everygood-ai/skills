@@ -12,6 +12,7 @@ Most of the skills come with builtin determenistic checks, linters and validator
 
 | Skill | Description |
 |---|---|
+| [egai-context-curation](skills/egai-context-curation) | Build and maintain compact, evidence-based Markdown context for a project or codebase area. |
 | [egai-write-tone](skills/egai-write-tone) | Write or rewrite text at a controlled tone level — prose, terse, or compact. |
 
 ## Installation
