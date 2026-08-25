@@ -2,7 +2,7 @@
 name: egai-context-curation
 description: Build and maintain compact, evidence-based Markdown context for a project or codebase area. Use when asked to extract context from scratch, update context after source changes, improve existing context quality, or audit context for stale claims. Do not use for implementation planning, code changes, or general documentation that is not maintained as project context.
 metadata:
-  version: "3.1.1"
+  version: "3.1.2"
 ---
 
 # EGAI Context Curation
@@ -267,5 +267,3 @@ Before reporting completion, confirm:
 - Unaffected valid content and project-specific organization remain intact.
 - Outside a dry run and an audit-only request, the repository root's `AGENTS.md` and `CLAUDE.md` each link to `main.md` for every documented area.
 - The final report names the operating mode, inspected scope, files changed, and unresolved verification markers.
-
-Read [the changelog](changelog.md) only when reviewing this skill's version history or preparing a revision.
