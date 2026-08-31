@@ -1,0 +1,27 @@
+# Changelog
+
+- `7.0.1`
+  - Corrected README.md's stale "phase of tasks" framing to match SKILL.md 7.0.0's single-task input contract.
+  - Rewrote the taskctl paragraph: egai-task-reader now owns `taskctl`, and README documents only the inline `ac` call.
+  - Dropped the removed ordered/parallel execution reference from the Task Pipeline closing line.
+- `7.0.0`
+  - Breaking: narrowed Input Contract to exactly one task-file path per invocation. The multi-task and phase `index.md`-path input modes no longer resolve.
+  - Removed `taskctl card` from this skill's docs. Task Card Access now documents only `ac`.
+  - Moved the `taskctl` reference to `egai-task-reader`. `ac` now runs via `EGAI_TASK_READER_SKILL_DIRECTORY/scripts/taskctl`, not a locally bundled script.
+  - Deleted the "Ordered and Parallel Execution" section. `egai-task-reader`'s `phase-batch` command now implements that grouping rule.
+  - Rewrote the Workflow for single-task execution. Dropped phase-order confirmation and the ordered-execution-unit loop. The caller now dispatches units.
+- `6.0.2` — Fixed the `SKILL.md` H1 heading (`EGAI Tasks Impl`), a leftover from the `egai-tasks-impl` → `egai-task-impl` rename that never matched the skill's actual name. No behavior change.
+- `6.0.1` — Reformatted the `5.1.0` changelog entry into sub-bullets to fit the 50-word-per-bullet limit. No behavior change.
+- `6.0.0` — `taskctl phase-info` now reads a phase's `kind`/`name` from required YAML frontmatter in its `index.md` instead of parsing the `# Phase N: NAME` Markdown heading; the phase number still comes from the `phase-N` directory name. Breaking change: a phase `index.md` without `kind: "phase"` frontmatter no longer resolves.
+- `5.1.0`
+  - Added `taskctl phase-info PHASE_DIR`: phase number, name, slug, suggested branch name, and PR title, parsed from the phase's own `index.md` heading.
+  - Added `taskctl pr-body PHASE_DIR BASE_BRANCH`: finished PR title and body, built from the phase's task cards.
+  - Both support `egai-tasks-runner`'s Stacked Phase Mode. This skill's own workflow is unchanged; git remains out of scope for `egai-task-impl`.
+- `5.0.0` — Followed `egai-tasks-writing`'s `index.md` unification: task progress now lives in the phase's own `index.md` instead of a plan-root `overview.md`, and its checkbox links are relative to the phase directory (`task-N-short-name.md`, not `phase-P/task-N-short-name.md`). Breaking change: plans in the old `overview.md` layout are not readable by this version.
+- `4.0.0` — Renamed the skill from `egai-implementation` to `egai-task-impl`.
+- `3.0.1` — Rewrote prose to comply with `egai-write-tone` `prose` mode's new redundancy-first rules.
+- `3.0.0` — Renamed the skill from `general-implementation` to `egai-implementation`, and updated its `egai-tasks-writing` cross-references to match that skill's rename.
+- `2.2.0` — Added YAGNI/lazy-engineer Implementation Rules block: simplicity ladder, no unrequested abstractions, delete over add, shortest working diff, root-cause fixes, and safety exceptions.
+- `2.1.0` — Updated overview checkbox path example to reflect `phase-P/task-N-short-name.md` subdirectory layout.
+- `2.0.0` — Corrected the skill identifier, added path-first task input, taskctl card and acceptance-criteria access with unit coverage, ordered parallel-batch execution, and overview checkbox state tracking.
+- `1.0.0` — Created a minimal workflow for implementing task-writing plans, verifying and checking acceptance criteria, and synchronizing overview task state.
