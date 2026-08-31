@@ -1,0 +1,17 @@
+{
+  "network": {
+    "allowedDomains": [
+      "api.anthropic.com",
+      "chatgpt.com",
+      "api.openai.com",
+      "github.com",
+      "api.github.com"
+    ],
+    "deniedDomains": []
+  },
+  "filesystem": {
+    "denyRead": [],
+    "allowWrite": [".", "/tmp", "/private/tmp"],
+    "denyWrite": [".claude/", ".agents/"]
+  }
+}
