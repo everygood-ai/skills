@@ -1,0 +1,36 @@
+# Changelog
+
+- `3.2.1`
+  - Phase dispatch now spawns an `egai-task-reader` sub-agent for a phase's execution units, instead of running `taskctl card` on each task.
+  - Stacked Phase Mode now spawns `egai-task-reader` sub-agents for branch/PR-title and PR-body, instead of calling `taskctl` directly.
+  - The `taskctl` script moved to `egai-task-reader`. It no longer lives in `egai-task-impl`'s directory.
+  - Dropped the `EGAI_TASKS_IMPL_SKILL_DIRECTORY` variable and every embedded `taskctl` command line from `SKILL.md` and `references/stacked-phase-mode.md`.
+  - Updated `README.md` to disclose the `egai-task-reader` dependency for phase batching and Stacked Phase Mode's branch/PR-title and PR-body lookups, reached through sub-agent dispatch like `egai-task-impl`.
+- `3.2.0`
+  - Dropped `build-sandbox-config.py`'s package-manifest detection. It only ever covered four ecosystems and gave a false sense of completeness; the script now writes a straight, uninspected copy of the baseline.
+  - Added blocked-domain recovery steps to `references/sandbox-mode.md`'s reminder text: edit `.srt-settings.generated.json` and re-run the `srt` command directly, not by re-triggering Sandbox Mode, which would overwrite the edit.
+  - Updated `README.md` and `build-sandbox-config.py`'s tests for the removed detection.
+  - Fixed the baseline's `allowWrite`: on macOS, `srt` needs the resolved `/private/tmp`, not the `/tmp` symlink. Writes under `/tmp`, including Stacked Phase Mode's worktree directory, were silently denied before this fix. Added `scripts/test_sandbox_e2e.py`, which runs against the real `srt` binary and caught it.
+- `3.1.1`
+  - Fixed a Sandbox Mode prose regression: replaced three Latin-abbreviation `e.g.` uses and one "As a result" connective with terse-mode-compliant wording.
+  - Moved `references/srt-settings.baseline.json` to `assets/srt-settings.baseline.json`. It is a template the build script copies, not documentation to read.
+  - Updated `build-sandbox-config.py`, its test, and `README.md` for the asset move.
+  - Removed a stray `scripts/__pycache__/` directory.
+  - Reformatted the `3.1.0` and `2.0.0` changelog entries into sub-bullets to fit the 50-word-per-bullet limit. No behavior change.
+- `3.1.0`
+  - Added Sandbox Mode, triggered only by an explicit caller request.
+  - Instead of dispatching, builds an `srt` (sandbox-runtime) settings file from the shipped baseline via `scripts/build-sandbox-config.py`, prints the CLI command for a fresh sandboxed session, and stops.
+  - Checked once, at the top-level node; sub-agents spawned for children, stacked phases, or tasks never re-check it.
+  - Independent of and combinable with Stacked Phase Mode.
+  - Full procedure lives in `references/sandbox-mode.md`, loaded only when requested. Normal dispatch is unchanged otherwise.
+- `3.0.0` — `classify-path.py` now classifies a node by reading required `kind`/`name` YAML frontmatter from its `index.md` instead of inferring group versus phase from directory structure, fixing a bug where an empty group directory failed to classify at all. Breaking change: an `index.md` without `kind`/`name` frontmatter no longer classifies.
+- `2.1.0` — Added Stacked Phase Mode, explicitly-requested only: runs an ordered range of phases as chained worktree branches and PRs, instead of one shared working tree. Added `scripts/phase-range.py` to resolve the range. The full procedure lives in `references/stacked-phase-mode.md`, loaded only when requested. Normal dispatch is unchanged otherwise.
+- `2.0.0`
+  - Followed `egai-tasks-writing`'s `index.md` unification: collapsed portfolio and epic into one `group` kind, since every non-leaf level now owns its own `index.md`.
+  - `classify-path.py` now prints `group`, `phase`, or `task` (previously `portfolio`, `epic`, `phase`, `task`).
+  - Groups now mark children `[~]` before dispatch, like phases already did, and let children with no unmet `Depends on` run concurrently at every group level, not only under a portfolio.
+  - Breaking change: callers relying on the old four-kind output or `overview.md` paths must update.
+- `1.1.0` — Added `scripts/classify-path.py`, a self-contained script that classifies a path as a portfolio, epic, phase, or task, and simplified Classify the Path to call it instead of stating the filesystem rules in prose.
+- `1.0.2` — Rephrased the delegation boundary as a positive statement instead of a "this skill does not" list.
+- `1.0.1` — Updated cross-references from `egai-implementation` to its new name, `egai-task-impl`.
+- `1.0.0` — Created the initial skill: classifies a portfolio, epic, phase, or task path and dispatches recursive sub-agents accordingly, delegating single tasks to `egai-implementation` and owning `overview.md` checkbox updates.
