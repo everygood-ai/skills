@@ -1,0 +1,9 @@
+[project]
+name = "taskctl"
+version = "1.1.1"
+description = "Read task-card frontmatter and phase structure without loading task bodies."
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.setuptools]
+packages = ["taskctl"]
