@@ -1,0 +1,31 @@
+# Changelog
+
+- `5.0.4` — Corrected `README.md`'s Task Frontmatter section, stale since `taskctl` moved to `egai-task-reader`. Now credits `egai-task-reader`, not `egai-task-impl`, as the schema's mechanical dependent. Fixes the `taskctl` command descriptions and drops the removed `validate-tasks.py` name.
+- `5.0.3` — Replaced the bundled `scripts/validate-tasks.py` with `egai-task-reader`'s `taskctl validate`, called inline. Same schema checks, same PASS/ERROR/FAILED output and exit codes. Removes duplicated frontmatter-parsing logic between the two skills.
+- `5.0.2` — Fixed the `SKILL.md` H1 heading (`EGAI Task Writing`), a leftover from the `egai-task-writing` → `egai-tasks-writing` rename that never matched the skill's actual name. No behavior change.
+- `5.0.1` — Reformatted the `5.0.0`, `4.0.0`, and `3.2.0` changelog entries into sub-bullets to fit the 50-word-per-bullet limit. No behavior change.
+- `5.0.0`
+  - Required `kind`/`name` YAML frontmatter on every group and phase `index.md`, replacing the plain Markdown-heading-only format.
+  - The validator now reads `kind` directly instead of inferring group versus phase from directory structure, fixing a bug where an empty group directory failed to classify.
+  - The phase number still comes from the `phase-N` directory name, not the heading; the heading must match frontmatter `name` exactly.
+  - Breaking change: existing `index.md` files without frontmatter no longer validate.
+- `4.0.0`
+  - Unified every plan-tree level on one `index.md` convention, renaming `overview.md` to `index.md`.
+  - Gave each phase its own `index.md` listing its tasks, previously nested inside the plan root's overview.
+  - Replaced the portfolio's free-text epic status with the same `[ ]`/`[~]`/`[x]` checkbox used everywhere else.
+  - The validator now requires and link-checks a phase-level `index.md`, in addition to the plan-root one.
+  - Breaking change: plans in the old `overview.md` layout do not validate under this version.
+- `3.2.0`
+  - Added an optional epic-portfolio layout, selected by the user per planning run, alongside the existing simple plan.
+  - Renamed "task-set root" to "plan root" throughout: an epic directory is itself a plan root, with its own Phase 1 / Task 1 numbering.
+  - Added an epic `overview.md` template and a portfolio `index.md` template, in new file `references/epic-portfolio.md`.
+  - Made the validator layout-aware: a task's parent directory must now be `phase-N` (previously optional), and it accepts epic and portfolio roots.
+  - The validator scopes task-ID uniqueness to each plan root instead of globally, rejects mixed layouts and over-nested phase directories, and requires an `overview.md` per plan root.
+- `3.1.0` — Added a tone-compliance step: draft every task file, `overview.md`, and other text output in `egai-write-tone` `terse` mode, invoking that skill's full workflow rather than only its reference file. Frontmatter fields continue to follow the fixed task-card schema.
+- `3.0.0` — Renamed the skill from `general-task-writing` to `egai-tasks-writing`, and updated its `egai-context-curation` cross-references to match that skill's rename.
+- `2.1.0` — Introduced phase-subdirectory layout: task files now live in `phase-N/` directories matching their `phase` frontmatter; overview links updated to `phase-N/task-N-name.md`; validator enforces directory-to-frontmatter consistency; three new test cases added.
+- `2.0.0` — Added strict task-card frontmatter, schema validation with unit coverage, ordered parallel-batch semantics, plain-text templates, and overview checkbox state tracking.
+- `1.2.0` — Added per-phase task checklists and implementation state tracking to `overview.md`.
+- `1.1.0` — Replaced the generic context-curation handoff with an explicit `general-context-curation` incremental-update task contract.
+- `1.0.1` — Made the context-curation skill an available, mandatory phase-ending dependency.
+- `1.0.0` — Created the initial phased implementation-task writing skill with task schemas, context handoffs, and quality checks.
