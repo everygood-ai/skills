@@ -1,0 +1,24 @@
+# Changelog
+
+- `2.4.0`
+  - Broadened `description` to trigger on implementing a task plan or spec that changes a skill's files, and on writing or refreshing a skill's `README.md`.
+  - Added a required `README.md` per skill: compact, prose-mode documentation of the skill's logic, created on new skills and updated whenever `SKILL.md`'s behavior changes.
+  - Exempted `README.md` from the orphan-resource check, alongside `changelog.md` and `gaps.md`.
+- `2.3.0`
+  - Exempted `test_*.py`, `gaps.md`, and `changelog.md` from the orphan-resource check.
+  - Removed the runtime meta-pointer workaround those files used to need.
+  - Required `egai-write-tone` `terse` mode for changelog bullets.
+  - Capped changelog bullets at 50 words per version.
+  - Added `scripts/validate_changelog.py` to enforce the bullet-count and length rule.
+- `2.1.0`
+  - Defaulted a new skill's own text output to `egai-write-tone` `terse` mode, unless its purpose calls for `prose`, `compact`, or plain text.
+  - Changed the drafting step to invoke `egai-write-tone`'s full workflow, not only its reference file.
+  - Rewrote prose to comply with `egai-write-tone` `prose` mode's redundancy-first rules.
+- `2.0.1` — Updated the `egai-write-tone` mode name from `low` to `prose`, following that skill's `low`/`medium`/`high` to `prose`/`terse`/`compact` rename.
+- `2.0.0` — Renamed the skill from `skill-maker` to `egai-skill-maker`.
+- `1.4.0` — Added a workflow step to register new external CLI dependencies in the repository's `install.sh`, and a step to draft skill prose with `egai-write-tone` in `low` mode before the Language quality check.
+- `1.3.0` — Added `test_*.py` naming convention and `pyproject.toml` package-skill guidance to the `scripts/` section; added required `python3 run-tests.py` post-validation step.
+- `1.2.1` — Clarified compatibility-based version selection, patch-by-default maintenance, major-only breaking releases, and one increment per delivery.
+- `1.2.0` — Prohibited HTML tags and angle-bracket placeholders in skill text and added wrapper enforcement.
+- `1.1.0` — Added wrapper-only validation, prohibited target-script execution, limited frontmatter to specification-supported fields, and added concise gap tracking.
+- `1.0.0` — Rebuilt the skill as a generic Agent Skills authoring guide with specification rules, compact-writing requirements, progressive disclosure, versioned changelogs, and deterministic `skill-validator` checks.
