@@ -1,5 +1,8 @@
 # Changelog
 
+- `7.0.2`
+  - Avoided comments that restate clear code.
+  - Required compact-tone drafting for needed comments.
 - `7.0.1`
   - Corrected README.md's stale "phase of tasks" framing to match SKILL.md 7.0.0's single-task input contract.
   - Rewrote the taskctl paragraph: egai-task-reader now owns `taskctl`, and README documents only the inline `ac` call.
