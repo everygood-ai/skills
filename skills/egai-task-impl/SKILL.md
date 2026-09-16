@@ -2,7 +2,7 @@
 name: egai-task-impl
 description: Implement one schema-valid task file produced by egai-tasks-writing. Use when given a single local task-file path and asked to read the task, implement its scope and deliverable, verify its acceptance criteria, and synchronize its checkbox in the phase's index.md. Do not use to write plans, schedule multiple tasks, or implement an unstructured request.
 metadata:
-  version: "7.0.1"
+  version: "7.0.2"
 ---
 
 # EGAI Task Impl
@@ -19,6 +19,12 @@ Before writing new code, climb the simplicity ladder in order: Does this code ne
 - Fix bugs at their root cause, not at the symptom.
 
 Never apply these rules to: input validation at trust boundaries, error handling that prevents data loss, security measures, or anything explicitly requested in the task. Never be lazy about reading and understanding the task and its context before acting.
+
+## Code Comments
+
+Do not add comments that restate logic already clear from names, method structure, or control flow.
+
+Write a comment only when it preserves non-obvious intent, a constraint, a tradeoff, or another fact the code cannot express clearly. Before writing a necessary comment, invoke `egai-write-tone` in `compact` mode. Keep the result unambiguous; do not compress away safety-critical meaning.
 
 ## Input Contract
 

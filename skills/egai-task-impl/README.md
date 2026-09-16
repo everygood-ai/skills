@@ -8,6 +8,8 @@ The preferred input is a filesystem path: exactly one task-file path per invocat
 
 `egai-task-impl` calls [egai-task-reader](../egai-task-reader/README.md)'s `taskctl ac` inline instead of bundling its own script. This verifies acceptance criteria without re-reading the task body. See egai-task-reader's own README for its full command surface.
 
+During implementation, the skill avoids comments that merely repeat clear code. When a comment is needed to preserve non-obvious intent or a constraint, it invokes [egai-write-tone](../egai-write-tone/README.md) in compact mode before drafting it.
+
 ## Task Pipeline
 
 `egai-task-impl` is the last stage of the task pipeline: it implements one task's body after [egai-tasks-writing](../egai-tasks-writing/README.md) has authored the plan and [egai-tasks-runner](../egai-tasks-runner/README.md) has dispatched it. When `egai-tasks-runner` dispatches a task directly, it owns that task's `index.md` checkbox, so `egai-task-impl` reports its outcome without editing `index.md`. When invoked standalone, without a dispatching runner, `egai-task-impl` updates the checkbox itself.
