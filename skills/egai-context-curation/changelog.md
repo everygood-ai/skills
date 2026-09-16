@@ -1,13 +1,39 @@
 # Changelog
 
-- `3.1.2` — Added a compact usage README and removed the runtime `changelog.md` reading instruction from the skill body.
-- `3.1.1` — Tightened what Writing Standards asks agents to capture. Added two rules: skip a fact reachable from a single file, and state only what exists rather than a pattern's absence (a deliberate prohibition still belongs in `rules.md` as a `MUST NOT`). Reworded `architecture.md`'s folder/file bullet to name modules by purpose or file path, not by an internal identifier that drifts on rename. Scoped `testing.md`'s framework-and-version bullet to setup a single manifest does not reveal. Clarified in Source-to-Context Mapping that a flow's technical detail belongs in `architecture.md` and its domain meaning in `domain.md`, recorded once each.
-- `3.1.0` — Added "Link from Repository Instructions": every mode now ensures the repository root's `AGENTS.md` and `CLAUDE.md` link to the current run's `main.md` under a `## Project Context` heading, creating either file if it does not exist. `audit-stale` treats a missing or stale link as a mismatch, applied only when edits are authorized.
-- `3.0.0` — Breaking schema change. Dropped context-file frontmatter (`description`, `limit`) and the per-file limit/permission workflow in favor of a single flat 500-line ceiling on every context file. Replaced the fixed six-file set with an open-ended, `main.md`-indexed split model: split a topic when the project's own shape divides it, not on line count. Added a `.context/context-lock.json` lock file recording `domainCapture`/`interfacesCapture` decisions from a new per-file applicability test, so `domain.md` and `interfaces.md` are captured or skipped based on project signal (and, for `domain.md`, an authoritative spec) instead of always being drafted. `audit-stale` now re-checks that applicability, not just existing claims. Rewrote `scripts/validate-context-lengths.sh` to check the flat ceiling against whatever `.md` files are actually present.
-- `2.1.0` — Added a tone-compliance step: draft the six context files in `egai-write-tone` `compact` mode and every other text output in `terse` mode, invoking that skill's full workflow rather than only its reference file. Rewrote prose to comply with `egai-write-tone` `prose` mode's redundancy-first rules.
+- `3.2.2`
+  - Excluded work-tracking provenance, including tasks, phases, Jira tickets, pull requests, and delivery status.
+  - Required compact current facts instead of rationale, background, or implementation narratives.
+- `3.2.1`
+  - Required multi-file evidence or cross-file inference for every captured fact.
+  - Forbade facts clear from one file.
+- `3.2.0`
+  - Added one `.context/` trust bullet under each `## Project Context` heading.
+  - `audit-stale` flags a missing trust bullet as a mismatch.
+- `3.1.2`
+  - Added a compact usage README.
+  - Removed the runtime `changelog.md` reading instruction.
+- `3.1.1`
+  - Excluded facts reachable from one file and pattern-absence claims.
+  - Put deliberate prohibitions in `rules.md` as `MUST NOT` statements.
+  - Named architecture modules by purpose or path instead of drift-prone identifiers.
+  - Scoped test-version capture and separated technical flow detail from domain meaning.
+- `3.1.0`
+  - Added repository-instruction links to each context set's `main.md`.
+  - `audit-stale` reports missing or stale links.
+  - It writes only when authorized.
+- `3.0.0`
+  - Breaking schema change: replaced context frontmatter and per-file limits with a flat 500-line ceiling.
+  - Replaced six fixed files with `main.md`-indexed topic splits based on project shape.
+  - Added `.context/context-lock.json` applicability decisions for conditional `domain.md` and `interfaces.md` capture.
+  - Audits recheck applicability. The length validator checks every context Markdown file present.
+- `2.1.0`
+  - Added full `egai-write-tone` workflow requirements: `compact` for context and `terse` for reports.
+  - Rewrote prose for `egai-write-tone`'s redundancy-first rules.
 - `2.0.0` — Renamed the skill from `general-context-curation` to `egai-context-curation`.
 - `1.1.3` — Replaced HTML-like placeholders and comments with plain-text markers.
 - `1.1.2` — Required each context limit to be one unquoted positive integer rather than a range or text value.
 - `1.1.1` — Raised all default context-file limits to a combined 490-line budget.
-- `1.1.0` — Added required context-file frontmatter, permission-gated limit increases, and deterministic metadata and line-count validation.
+- `1.1.0`
+  - Added required context-file frontmatter and permission-gated limit increases.
+  - Added deterministic metadata and line-count validation.
 - `1.0.0` — Created a portable four-mode workflow for extracting, updating, improving, and auditing compact project context.

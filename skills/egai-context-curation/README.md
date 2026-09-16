@@ -4,7 +4,7 @@ Builds and maintains compact, evidence-based project context for AI agents.
 
 ## Concept
 
-Records source-backed knowledge that takes time to discover or infer. Excludes aspirations, obvious file contents, copied implementation, and generic advice. Treats context as current state: update and prune together.
+Records source-backed, cross-file knowledge that takes time to discover or infer. Excludes aspirations, copied implementation, generic advice, work-tracking references, detailed explanations, and facts clear from one file. Treats context as current state: update and prune together.
 
 `main.md` routes agents to the context needed for a change. Topic files hold each fact once. Source, tests, configuration, specifications, and repository instructions provide evidence.
 
@@ -34,12 +34,14 @@ File set open-ended. Split by project shape with topic names such as `frontend-a
 
 ## Capture rules
 
-- Capture only facts requiring multi-file reading or relationship inference.
+- Capture only facts that require multiple files or relationship inference no one file states. Never capture a fact clear from one file.
+- Write one current fact or constraint per entry. Use paths for verification instead of rationale, background, examples, or implementation narratives.
+- Never include tasks, phases, plans, Jira or other ticket references, pull requests, commits, or delivery status. They may set inspection scope but are not context evidence.
 - Keep one fact in one context file.
 - Mark inference not directly established as `[inferred — verify]`.
 - Use `# TODO: insufficient evidence — verify` instead of invented content.
 - Skip `domain.md` or `interfaces.md` when its applicability check resolves to skip.
-- Keep repository `AGENTS.md` and `CLAUDE.md` linked to each context set's `main.md`.
+- Keep repository `AGENTS.md` and `CLAUDE.md` linked to each context set's `main.md`. Each linked file also carries one trust bullet that tells agents not to reconstruct `.context/` claims by re-exploring the codebase.
 - Draft context in `egai-write-tone` `compact` mode. Draft reports in `terse` mode.
 
 ## Example

@@ -2,12 +2,33 @@
 name: egai-context-curation
 description: Build and maintain compact, evidence-based Markdown context for a project or codebase area. Use when asked to extract context from scratch, update context after source changes, improve existing context quality, or audit context for stale claims. Do not use for implementation planning, code changes, or general documentation that is not maintained as project context.
 metadata:
-  version: "3.1.2"
+  version: "3.2.2"
 ---
 
 # EGAI Context Curation
 
-Maintain a small, indexed context set that records knowledge which takes time to discover or infer from the codebase. Capture current evidence, not aspirations or obvious file contents.
+Maintain a small, indexed context set of cross-file knowledge that takes time to discover or infer from the codebase. Capture current evidence, not aspirations, obvious file contents, work-tracking provenance, or facts a reader can obtain from one file.
+
+## Apply the Evidence Threshold
+
+Capture a fact only when establishing it requires reading multiple files or inferring a relationship that no one file states. Never capture a fact whose relevant content is clear from one file, even when that fact is useful or frequently needed. Treat this as a capture threshold, not merely a preference for brief wording.
+
+## Exclude Work Tracking
+
+Context describes the target project's current behavior and durable maintenance constraints. It does not describe how work was planned, discussed, or delivered.
+
+- Never capture task, phase, epic, sprint, milestone, plan, backlog, Jira, issue, ticket, pull request, commit, assignee, status, estimate, or comment references. This includes identifiers, links, and summaries.
+- Use a request, diff, ticket, task plan, or review comment only to establish inspection scope. Do not treat it as evidence for a context claim.
+- A project-specific workflow belongs in context only when current code, configuration, or a contract establishes its behavior. Do not record the work item's lifecycle or the history of changes to that workflow.
+
+## Write Facts, Not Explanations
+
+Each context bullet must state one current fact, relationship, or constraint. Keep only the detail needed to act safely.
+
+- Prefer `SUBJECT — CURRENT RELATION OR CONSTRAINT` over narrative prose.
+- Do not add rationale, background, examples, implementation walkthroughs, before-and-after stories, or a detailed explanation of how evidence was discovered.
+- When a reader needs the source to verify a claim, give a relevant path rather than explaining the source in prose.
+- Keep a causal consequence only when it is itself a cross-file fact that changes a future maintainer's action.
 
 ## Resolve the Target
 
@@ -26,14 +47,15 @@ Before writing any file, invoke the `egai-write-tone` skill and follow its full 
 
 ## Link from Repository Instructions
 
-Keep the project's root instruction files pointing at the current context set, so a future session finds it without searching.
+Keep the project's root instruction files linked to the current context set and marked as trusted. This lets a future session find the context without searching, and skip reconstructing what it already documents.
 
 - Locate the repository root: the nearest ancestor directory containing `.git`, or the project root when no version control is present.
-- At that root, check `AGENTS.md` and `CLAUDE.md` independently. For each one, add or update one line linking to this run's `main.md`, relative to the root:
-  - Insert it as a Markdown bullet under a `## Project Context` heading. Create that heading at the end of the file if it is absent. Create the file itself, containing only that heading and bullet, when the file does not exist.
-  - Use this bullet format: `- [AREA_LABEL context](RELATIVE_PATH_TO_MAIN_MD) — durable project knowledge; read before a non-trivial change in AREA_LABEL.` Set `AREA_LABEL` to the repository's directory name when Source path is the repository root, or to the area's path relative to the root otherwise.
-  - Touch only the `## Project Context` heading and its bullets. Leave the rest of the file's structure and content unchanged. When the heading already lists a different area's bullet, keep it and add or update only the bullet for the current area.
-- Run this check once per invocation, after the context path is finalized, in every mode. **Audit for Stale** follows its own report-then-authorize rule instead: report a missing or stale link as a mismatch, and only write it when the request authorizes edits.
+- At that root, check `AGENTS.md` and `CLAUDE.md` independently. For each one:
+  - Add or update one line linking to this run's `main.md`, relative to the root, as a Markdown bullet under a `## Project Context` heading. Create that heading at the end of the file if it is absent. Create the file itself, containing only that heading and bullet, when the file does not exist.
+    - Use this bullet format: `- [AREA_LABEL context](RELATIVE_PATH_TO_MAIN_MD) — durable project knowledge; read before a non-trivial change in AREA_LABEL.` Set `AREA_LABEL` to the repository's directory name when Source path is the repository root, or to the area's path relative to the root otherwise.
+  - The same `## Project Context` heading must also carry this exact trust bullet, once, regardless of how many area bullets exist: `- Treat \`.context/\` claims as trusted and current. Do not reconstruct that knowledge by re-exploring the codebase (grep, find, manual file reads) — read the relevant \`.context/\` file and act on it directly.` Add it only when absent. Never write a second copy of it, and never write one per area.
+  - Touch only the `## Project Context` heading, its area bullets, and the trust bullet. Leave the rest of the file's structure and content unchanged. When the heading already lists a different area's bullet, keep it and add or update only the bullet for the current area.
+- Run this check once per invocation, after the context path is finalized, in every mode. **Audit for Stale** follows its own report-then-authorize rule instead: report a missing area link, a stale area link, or a missing trust bullet as a mismatch. Only write any of them when the request authorizes edits.
 
 ## Operating Modes
 
@@ -60,7 +82,7 @@ Use to create a context set for an undocumented project or area.
 2. Inspect recent history for the source path when version control is available and history clarifies current structure or conventions.
 3. Run spec detection and the `domain.md`/`interfaces.md` applicability checks in [Capture and applicability](#capture-and-applicability). Write the resulting `domainCapture`, `interfacesCapture`, and any `specPaths` to the lock file.
 4. Create the context directory and populate `main.md`, `architecture.md`, `rules.md`, `testing.md`, and any file that step 3 marked applicable, per [Context Set](#context-set) and limited by the requested scope. Skip `domain.md`/`interfaces.md` entirely — no stub, no index entry — when their applicability check resolved to skip.
-5. Record only decisions and behavior supported by current project evidence.
+5. Record only decisions and behavior that pass the evidence threshold and are supported by current project evidence.
 6. Mark a claim that is inferred but not directly established with `[inferred — verify]`.
 7. Use `# TODO: insufficient evidence — verify` instead of inventing content for a required file or section.
 8. Apply [Link from Repository Instructions](#link-from-repository-instructions), unless this is a dry run.
@@ -72,8 +94,8 @@ When the user requests a dry run, propose entries grouped by target file and mak
 Use when the context exists but is unclear, oversized, incomplete, duplicated, or hard to navigate.
 
 1. Read the index, the requested context files, and enough source evidence to verify proposed edits.
-2. Identify claims that are vague, duplicated, obvious from one file, unsupported, misplaced, or beyond the 500-line ceiling.
-3. Replace them with concise, source-verifiable statements in the correct file.
+2. Identify claims that are vague, duplicated, clear from one file, unsupported, misplaced, or beyond the 500-line ceiling.
+3. Remove work-tracking references and detailed explanations. Replace remaining weak claims with concise, source-verifiable statements in the correct file.
 4. Restore missing index links and required sections only when evidence exists.
 5. Validate the scoped files against the flat length ceiling.
 6. Preserve useful project-specific organization unless it conflicts with repository instructions or factual accuracy.
@@ -87,7 +109,7 @@ Use to compare existing context against the current source tree.
 
 1. Check paths, symbols, commands, dependencies, flows, rules, lifecycle states, and contracts named in the scoped context.
 2. Re-run the `domain.md`/`interfaces.md` applicability checks ([Capture and applicability](#capture-and-applicability)) against current project state — do not only re-verify existing claims. If a file recorded `not-applicable` now shows a signal, flag it for capture (report-only unless the request authorizes edits, per existing mode rules) and propose updating the lock file. Flag the symmetric case too: a captured file whose signal has disappeared.
-3. Check whether the repository root's `AGENTS.md`/`CLAUDE.md` link to `main.md` for every documented area, per [Link from Repository Instructions](#link-from-repository-instructions). Flag a missing or stale link as a mismatch.
+3. Check whether the repository root's `AGENTS.md`/`CLAUDE.md` link to `main.md` for every documented area, and whether they carry the trust bullet, per [Link from Repository Instructions](#link-from-repository-instructions). Flag a missing or stale link, or a missing trust bullet, as a mismatch.
 4. Classify each mismatch as stale, unsupported, ambiguous, or still valid.
 5. Report the evidence and proposed removal or correction for every mismatch.
 6. Apply corrections only when the request authorizes edits, including a flagged link. If the request asks only for an audit, leave files unchanged.
@@ -146,7 +168,7 @@ No split-tracking field. Splitting state lives entirely in `main.md`'s index.
 - No signal: skip it — no stub, no index entry. Record `interfacesCapture: not-applicable`.
 - When a machine-readable spec (OpenAPI, AsyncAPI, GraphQL SDL, protobuf, JSON Schema) exists, it shapes the file's content instead of skipping it: write mostly paths to the spec plus a short summary — see that file's "paths to authoritative machine-readable specifications" bullet — instead of reconstructing contracts from code.
 
-Read both signals broadly, wider than "business application" or "networked service." A CLI command surface counts as a boundary contract. A release or task lifecycle counts as a domain signal, the same as a commercial business domain. A skills library or CLI tool can carry a real domain and a real interface surface under these broader signals; do not narrow either test back to the two literal categories.
+Read both signals broadly, wider than "business application" or "networked service." A CLI command surface counts as a boundary contract. A project-specific lifecycle counts as a domain signal only when current code, configuration, or a contract establishes it. A skills library or CLI tool can carry a real domain and a real interface surface under these broader signals; do not narrow either test back to the two literal categories.
 
 Detection during **From Scratch** is headless: search the project for an authoritative design document and check the signals above without prompting the user. A user-declared override — in repository instructions or the lock file — always wins over detection.
 
@@ -246,8 +268,9 @@ Omit `[CONTEXT_FILE ...]` to validate every `.md` file present in the context di
 ## Writing Standards
 
 - Prefer one short bullet and a source path over a paragraph that restates implementation.
+- Write facts, not explanations. Exclude work-tracking references, rationale, background, examples, and change history.
 - Keep every claim verifiable against current project evidence.
-- Capture a fact only when reaching it requires reading multiple files or inferring a relationship no single file states outright.
+- Apply the evidence threshold: capture only a fact that requires reading multiple files or inferring a relationship no one file states. Never capture a fact clear from one file.
 - In `architecture.md` and `domain.md`, state what exists. An absence claim such as "No Redux" drifts silently once the project adopts the pattern, because nothing about adoption removes it. Route a deliberate prohibition through `rules.md` instead, as a `MUST NOT` with its reason.
 - Do not copy implementation blocks. Use exact syntax only when a one-line identifier or command is necessary.
 - Keep each fact in one context file and link related material instead of duplicating it.
@@ -260,10 +283,12 @@ Omit `[CONTEXT_FILE ...]` to validate every `.md` file present in the context di
 Before reporting completion, confirm:
 
 - Every changed claim is supported by current source, tests, configuration, specifications, or repository instructions.
+- Every captured fact passes the evidence threshold; no fact is clear from one file.
+- No context entry contains work-tracking provenance or a detailed explanation instead of a current fact.
 - No context claim contradicts the current code or another context file.
 - All documented paths, links, commands, and symbols resolve when they are expected to exist.
 - `scripts/validate-context-lengths.sh` passes for every created or changed context file.
 - Content appears in the correct file and remains under the 500-line ceiling.
 - Unaffected valid content and project-specific organization remain intact.
-- Outside a dry run and an audit-only request, the repository root's `AGENTS.md` and `CLAUDE.md` each link to `main.md` for every documented area.
+- Outside a dry run and an audit-only request, the repository root's `AGENTS.md` and `CLAUDE.md` each link to `main.md` for every documented area and each carry the trust bullet.
 - The final report names the operating mode, inspected scope, files changed, and unresolved verification markers.
