@@ -1,5 +1,6 @@
 # Changelog
 
+- `1.1.2` — Corrected `SKILL.md`: `taskctl` output is a fixed, deterministic format, and no `egai-write-tone` register applies to it. No compiled tone contract added.
 - `1.1.1` — Trimmed `SKILL.md` and `README.md` to drop named-consumer framing ("shared dependency," per-caller examples), keeping only the mechanics an activated agent needs. No behavior change.
 - `1.1.0`
   - Added `validate`: full authoring-time plan validation, ported from `egai-tasks-writing`'s `validate-tasks.py`.
