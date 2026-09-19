@@ -41,7 +41,7 @@ Same source, three outputs:
 
 1. Determine the mode — from an explicit request (`prose`, `terse`, `compact`, or a synonym like "dense" or "telegraphic"), or proposed from the content type and confirmed with the user.
 2. Reduce the source to its distinct ideas before drafting.
-3. Draft following the chosen mode's reference file: [prose.md](references/prose.md), [terse.md](references/terse.md), or [compact.md](references/compact.md).
+3. Follow [references/standalone-workflow.md](references/standalone-workflow.md), which loads [the kernel](references/contracts/kernel/v1.md) plus the chosen mode's profile.
 4. Run `scripts/lint.sh MODE FILE` if `vale` is installed, and fix error-level findings.
 5. Run the mode's self-check against the result.
 
