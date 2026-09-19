@@ -3,7 +3,7 @@ name: egai-skill-maker
 description: Create, revise, and validate portable Agent Skills that follow the agentskills.io specification, including each skill's README.md. Use when asked to design a new skill, add a feature or mode to an existing skill, carry out a task plan, spec, or research document that changes a skill's SKILL.md, scripts, references, or assets, organize skill resources, fix skill metadata or structure, check a skill for specification compliance, or write or refresh a skill's README.md. Triggers even when the request names a plan or document rather than the skill directly, as long as the concrete change lands inside a skill directory.
 compatibility: Requires the skill-validator CLI; commands documented here are verified with v1.6.0.
 metadata:
-  version: "2.4.0"
+  version: "2.8.3"
 ---
 
 # EGAI Skill Maker
@@ -19,8 +19,8 @@ Create self-contained, portable Agent Skills. Follow the open Agent Skills speci
 5. Record requested behavior that the specification or available tooling cannot represent in `gaps.md`. Never invent unsupported behavior.
 6. Create or update the skill in the location requested by the user or required by the project. Do not assume a client-specific installation directory.
 7. When the skill or its bundled scripts require an external CLI, add that CLI's Homebrew formula to `install.sh` at the repository root in the same change.
-8. Invoke the `egai-write-tone` skill in `prose` mode and follow its full workflow on the prose in `SKILL.md` and its reference files, not only the mode's reference file. Then apply the [Language quality](#language-quality) rules on top of that pass. Skip this step only when `egai-write-tone` is unavailable in the current environment.
-9. Choose one release increment for the complete delivered change. Invoke `egai-write-tone` in `terse` mode on the `changelog.md` entry and follow its full workflow. Then update `changelog.md` with the same version per [Version and changelog](#version-and-changelog).
+8. Invoke the `egai-write-tone` skill in `prose` mode on the hand-authored prose in `SKILL.md` and its reference files. Follow its full workflow, not only the mode's reference file. Before drafting `README.md`, read [references/tone.md](references/tone.md) and apply its Kernel plus [README tone](references/tone.md#readme-tone-tone-contract). Before drafting a changelog entry, apply Kernel plus [Changelog tone](references/tone.md#changelog-tone-tone-contract) instead. Do not draft `references/tone.md` itself — its sections are already pinned and compiled. After the `egai-write-tone` pass, apply the [Language quality](#language-quality) rules. Skip the `egai-write-tone` invocation only when the skill is unavailable in the current environment.
+9. Choose one release increment for the complete delivered change. Draft the changelog entry per [Changelog tone](references/tone.md#changelog-tone-tone-contract). Then update `changelog.md` with the same version per [Version and changelog](#version-and-changelog).
 10. Create or update `README.md` per [Write README.md](#write-readmemd).
 11. Validate the skill through the bundled wrapper using the commands in this file. Also validate `changelog.md` with `scripts/validate_changelog.py`.
 12. Test the skill on representative requests when practical, then refine unclear or brittle instructions.
@@ -48,6 +48,16 @@ Default the new skill's own generated text output to `egai-write-tone` terse mod
 - Plain unstyled text for a conversational domain.
 
 State the chosen register explicitly in the new skill's `SKILL.md`.
+
+## Author tone-contract manifest entries
+
+When a skill needs a compiled tone contract, such as a context-file section or a report section, deliver its heading in the skill's `references/tone.md` and a matching `profiles[]` entry in `tone-contracts.json`'s value for that `references/tone.md` path as one atomic change. Never deliver a new compiled-tone-contract heading without also adding or updating its manifest entry in the same change. Never add or update such an entry without its matching heading.
+
+End the heading text with the reserved marker `` `[tone-contract]` `` and make the entry's `heading` field match it exactly. Add the entry to the target file's `profiles` list with a `profile` and a `revision`, pinned to the selected profile's current revision at authoring time. Set the target file's `kernelRevision` to the kernel's current revision only when the file is new. This value is shared once per file, never set per entry. An existing target file's `kernelRevision` already covers every profile section it holds.
+
+Select the entry's `profile` with the register rule above: `prose` for long-form user-facing writing, `compact` for dense context or requirement files, `terse` otherwise. Do not invent a separate selection rule for manifest entries.
+
+Before completing delivery, run both `python3 scripts/compile-tone-contracts.py verify` and `python3 scripts/compile-tone-contracts.py audit` from the repository root. `verify` confirms every target file's Kernel and profile sections match their pinned revisions. `audit` is the mechanical backstop that catches a marked heading and its manifest entry falling out of sync, in either direction, regardless of why — do not rely on the instruction above alone. Treat a non-zero exit from either command as blocking: fix the heading or entry and rerun both until they pass.
 
 ## Create the directory
 
@@ -120,7 +130,7 @@ Maintain the version and changelog as one atomic change:
 - When several changes of different levels ship together, use the highest required level once for the whole delivery.
 - Create `changelog.md` beside `SKILL.md`.
 - Keep changelog entries newest first as a Markdown list, one list per version.
-- Invoke `egai-write-tone` in `terse` mode and follow its full workflow to draft every bullet. Skip this step only when `egai-write-tone` is unavailable in the current environment.
+- Draft every bullet per [Changelog tone](references/tone.md#changelog-tone-tone-contract).
 - Cap each bullet at 50 words or fewer. Split a version with more than one distinct change into several short bullets instead of one long sentence.
 - Make the first changelog version match `metadata.version` exactly.
 - When adopting this workflow for an unversioned skill, set it to `"1.0.0"` and summarize its current baseline.
@@ -159,7 +169,7 @@ Create `README.md` beside `SKILL.md` for every skill this workflow creates or up
 - State the skill's purpose, its trigger conditions, its workflow at a glance, and its relationship to other skills it invokes or is invoked by. Link to those skills' own `README.md` files.
 - Link to `SKILL.md` and to any `references/` file for full procedural detail. Do not duplicate that detail in `README.md`.
 - Keep `README.md` short enough to read in one sitting.
-- Invoke `egai-write-tone` in `prose` mode and follow its full workflow to draft `README.md`. Skip this step only when `egai-write-tone` is unavailable in the current environment.
+- Draft `README.md` per [README tone](references/tone.md#readme-tone-tone-contract).
 - Treat a missing `README.md`, or one left stale after a change to `SKILL.md`, as blocking, the same as a missing or mismatched `changelog.md` entry.
 
 ### Description
@@ -188,9 +198,10 @@ Do not explain generic facts a capable agent already knows. Avoid filler, duplic
 
 ### Language quality
 
-Draft with the `egai-write-tone` skill in `prose` mode, then check the result against these skill-specific rules, which `prose` mode does not cover:
+Draft hand-authored `SKILL.md` prose with the `egai-write-tone` skill in `prose` mode. A compiled tone-contract section in `references/tone.md`, such as [README tone](references/tone.md#readme-tone-tone-contract), needs no separate drafting pass. Then check the result against these skill-specific rules, which `prose` mode does not cover:
 
 - State the action or rule directly. Remove throat-clearing and commentary.
+- State only the resulting rule or fact in `SKILL.md`, `README.md`, and `changelog.md`. Give the reasoning behind a design or tone-contract decision in the delivery report to the caller, never in a delivered file.
 - Prefer specific verbs and concrete conditions over vague guidance.
 - Use one interpretation per instruction. Define any term that could change execution.
 - Distinguish requirements from recommendations with `must`, `never`, `should`, and `may` consistently.

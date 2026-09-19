@@ -1,5 +1,23 @@
 # Changelog
 
+- `2.8.3` — Recompiled `references/tone.md`'s `README tone` and `Changelog tone` sections after `egai-write-tone` restored rules its `v1` contracts had dropped (`prose` regained active voice, no-summary, and no-hedging; `terse` regained the semicolon-split rule).
+- `2.8.2`
+  - Required design and tone-contract rationale to stay in the delivery report, never in `SKILL.md`, `README.md`, or `changelog.md`.
+  - Split three semicolon- or em-dash-joined sentences in Workflow step 8, "Author tone-contract manifest entries," and "Language quality" into single-idea sentences, complying with this skill's own `prose`-mode rule.
+- `2.8.1`
+  - `references/tone.md`'s compiled sections now pin `egai-write-tone`'s `v1` contracts (`kernelRevision: 1`, every profile at `revision: 1`) instead of `v2`: `v2`'s only change (a bold label instead of a heading) was folded back into `v1` in place, since nothing had a reason to keep pinning both.
+- `2.8.0`
+  - Moved the compiled `README tone` and `Changelog tone` sections out of `SKILL.md` into `references/tone.md`, compiled from `tone-contracts.json`'s new per-file `kernelRevision`-plus-`profiles` schema, pinned to the `v2` contracts.
+  - Replaced the inline compiled sections with one instruction to read `references/tone.md` before drafting, naming Kernel plus the matching profile section per artifact.
+  - Revised "Author tone-contract manifest entries" for the per-file schema: a `profiles[]` entry per heading, and one shared `kernelRevision` per target file instead of a per-entry value.
+- `2.7.0`
+  - Added the `` `[tone-contract]` `` heading marker and pinned `kernelRevision` to `#### README tone` and `#### Changelog tone`, matching updated `tone-contracts.json` entries.
+  - Re-ran `write`; both compiled sections now embed the canonical kernel before their pinned profile content.
+  - Required new tone-contract manifest entries to carry the marker and `kernelRevision`, and named `audit` a blocking pre-delivery check alongside `verify`.
+- `2.6.0`
+  - Compiled the pinned `prose` and `terse` tone contracts into `#### README tone` and `#### Changelog tone`, tracked in `tone-contracts.json`.
+  - Removed the runtime `egai-write-tone` invocations for drafting `README.md` and changelog bullets; Workflow steps 8-9 and Language quality now point to the compiled sections instead.
+- `2.5.0` — Added an atomic tone-contract manifest authoring rule: delivering a compiled-tone-contract heading now requires adding or updating its `tone-contracts.json` entry in the same change, using the existing register-selection rule, and passing `python3 scripts/compile-tone-contracts.py verify` before delivery.
 - `2.4.0`
   - Broadened `description` to trigger on implementing a task plan or spec that changes a skill's files, and on writing or refreshing a skill's `README.md`.
   - Added a required `README.md` per skill: compact, prose-mode documentation of the skill's logic, created on new skills and updated whenever `SKILL.md`'s behavior changes.
