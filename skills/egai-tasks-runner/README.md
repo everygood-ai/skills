@@ -2,6 +2,8 @@
 
 Orchestrates execution of an [egai-tasks-writing](../egai-tasks-writing/README.md) plan by walking its node tree. A portfolio, an epic, and a phase are each a directory with its own `index.md`; a task is a leaf file. The skill dispatches one sub-agent per node, invokes [egai-task-impl](../egai-task-impl/README.md) once per task, and keeps every `index.md` checkbox current.
 
+Every status update and report this skill produces follows [egai-write-tone](../egai-write-tone/README.md)'s compiled Report tone, baked into [references/tone.md](references/tone.md) instead of invoked live per run.
+
 ## Input
 
 The input is a single filesystem path: a node's directory, its `index.md` file, or a task file, plus optional free-text instructions. The skill resolves relative paths from the current workspace and forwards the instructions, unchanged, to every sub-agent it spawns at every recursion level.
