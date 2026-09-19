@@ -2,7 +2,7 @@
 name: egai-tasks-writing
 description: Create execution-ready Markdown task plans from feature requests and technical specifications. Use when asked to decompose implementation work into phased, schema-valid task files with frontmatter cards, precise scope, testable acceptance criteria, a plan index, and mandatory egai-context-curation handoffs. Supports an optional epic-portfolio layout for splitting large initiatives into independently releasable epics. Do not use for implementation or external issue-tracker management.
 metadata:
-  version: "5.0.4"
+  version: "5.1.1"
 ---
 
 # EGAI Tasks Writing
@@ -16,7 +16,7 @@ Create implementation plans that a capable engineer unfamiliar with the codebase
 3. Identify the required changes, non-negotiable constraints, affected components, expected behavior, and required tests. Distinguish confirmed requirements from unresolved decisions.
 4. Resolve minor gaps from repository evidence. Ask for clarification when a missing decision would materially change scope, architecture, or observable behavior. Do not hide the decision inside a task.
 5. Decompose the work into cohesive phases and order tasks by implementation dependency. In an epic portfolio, decompose each epic independently.
-6. Before writing an `index.md` or any task file, invoke the `egai-write-tone` skill in `terse` mode and follow its full workflow, not only its reference file. Reduce each task's content to its distinct ideas first, then draft every task file, every `index.md`, and any other text output this skill produces from that reduced set. Frontmatter fields still follow the schema in [Task File Schema](#task-file-schema). Terse mode governs the body prose.
+6. Before writing an `index.md` or any task file, read [references/tone.md](references/tone.md). Apply its Kernel plus [Task plan tone](references/tone.md#task-plan-tone-tone-contract) section to every task file, every `index.md`, and any other text output this skill produces. Frontmatter fields still follow the schema in [Task File Schema](#task-file-schema).
 7. Write `index.md` at the plan root, listing its phases. Inside each `phase-N/` subdirectory of that plan root, write one Markdown file per task and that phase's own `index.md` listing its tasks. `N` is the phase number matching the task's `phase` frontmatter field. Use task numbers that increase across all phases within that plan root. In an epic portfolio, repeat this for each epic, starting every epic at Phase 1 / Task 1. Write the portfolio's `index.md` only after every epic's own `index.md` exists.
 8. Run `python3 EGAI_TASK_READER_SKILL_DIRECTORY/scripts/taskctl validate TASK_PATH` from the planning workspace, where `EGAI_TASK_READER_SKILL_DIRECTORY` contains `egai-task-reader`'s `SKILL.md` and `TASK_PATH` is the generated plan root, epic root, portfolio root, or a task file. Call this directly, not through a spawned subagent. The pass/fail result decides whether the plan is done.
 9. Review the complete task set against the quality checks before delivery.
