@@ -1,5 +1,7 @@
 # Changelog
 
+- `5.1.1` — Recompiled `references/tone.md`'s `Task plan tone` section after `egai-write-tone` restored rules its `terse` and kernel `v1` contracts had dropped (the semicolon-split rule, logical-connective and sequence-marker coverage).
+- `5.1.0` — Replaced the stale `egai-write-tone` `terse`-mode invocation, broken by that skill's kernel/profile-contract rewrite, with a compiled `Task plan tone` contract in the new `references/tone.md`, pinned to the `terse` profile and tracked in `tone-contracts.json`. Task files, `index.md`, and other generated output now load fixed tone rules instead of invoking a nested skill.
 - `5.0.4` — Corrected `README.md`'s Task Frontmatter section, stale since `taskctl` moved to `egai-task-reader`. Now credits `egai-task-reader`, not `egai-task-impl`, as the schema's mechanical dependent. Fixes the `taskctl` command descriptions and drops the removed `validate-tasks.py` name.
 - `5.0.3` — Replaced the bundled `scripts/validate-tasks.py` with `egai-task-reader`'s `taskctl validate`, called inline. Same schema checks, same PASS/ERROR/FAILED output and exit codes. Removes duplicated frontmatter-parsing logic between the two skills.
 - `5.0.2` — Fixed the `SKILL.md` H1 heading (`EGAI Task Writing`), a leftover from the `egai-task-writing` → `egai-tasks-writing` rename that never matched the skill's actual name. No behavior change.
