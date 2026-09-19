@@ -2,7 +2,7 @@
 name: egai-context-curation
 description: Build and maintain compact, evidence-based Markdown context for a project or codebase area. Use when asked to extract context from scratch, update context after source changes, improve existing context quality, or audit context for stale claims. Do not use for implementation planning, code changes, or general documentation that is not maintained as project context.
 metadata:
-  version: "3.2.2"
+  version: "3.5.2"
 ---
 
 # EGAI Context Curation
@@ -43,7 +43,7 @@ Determine these inputs before editing:
 
 Honor repository instructions when they define different filenames, schemas, or size limits. Otherwise use the context set in this skill.
 
-Before writing any file, invoke the `egai-write-tone` skill and follow its full workflow, not only the target mode's reference file. Reduce the content to its distinct ideas first, then draft from that reduced set. Draft every context file in `compact` mode; the 500-line ceiling assumes that density. Draft every other text output this skill produces, such as a completion report, an audit finding, or a proposed-entry summary, in `terse` mode.
+Read [references/tone.md](references/tone.md) before drafting. Apply its Kernel plus [Context file tone](references/tone.md#context-file-tone-tone-contract) section to every context file; the 500-line ceiling assumes that density. Apply Kernel plus [Report tone](references/tone.md#report-tone-tone-contract) to every other text output this skill produces, such as a completion report, an audit finding, or a proposed-entry summary.
 
 ## Link from Repository Instructions
 
