@@ -3,7 +3,7 @@ name: egai-write-tone
 description: Write or rewrite text at one of three tone levels — prose (clear, scannable documentation for product docs and guides), terse (dense, on-point technical writing, one idea per line), or compact (maximum-density compression for requirements and context files, meaning must stay unambiguous). Use when asked to write, rewrite, tighten, or compress text to a stated tone or register, or to cut a wordy draft down to size without losing meaning. Do not use for casual conversational writing, marketing copy, or creative prose.
 compatibility: Structural linting (scripts/lint.sh) requires the vale CLI; rules are verified with vale 3.17.1.
 metadata:
-  version: "3.0.1"
+  version: "3.1.3"
 ---
 
 # EGAI Write Tone
@@ -12,29 +12,17 @@ Write or rewrite text at a controlled tone level. Every level answers the same q
 
 | Mode | Use for | Governing rules |
 |---|---|---|
-| `prose` | Product documentation, feature descriptions, guides — text meant to read well and scan fast | [references/prose.md](references/prose.md) |
-| `terse` | Technical/procedural documentation that needs to be dense and on-point | [references/terse.md](references/terse.md) |
-| `compact` | Dense requirements, compact project context, system-prompt-style text | [references/compact.md](references/compact.md) |
+| `prose` | Product documentation, feature descriptions, guides — text meant to read well and scan fast | [references/contracts/prose/v1.md](references/contracts/prose/v1.md) |
+| `terse` | Technical/procedural documentation that needs to be dense and on-point | [references/contracts/terse/v1.md](references/contracts/terse/v1.md) |
+| `compact` | Dense requirements, compact project context, system-prompt-style text | [references/contracts/compact/v1.md](references/contracts/compact/v1.md) |
 
-Modes are not interchangeable presets of the same rules — each reference file is authoritative for its mode. Do not apply terse's line-by-line format to prose mode, and do not apply prose's full-sentence grammar to compact mode.
+Modes are not interchangeable presets of the same rules — each profile file is authoritative for its mode, on top of the shared [kernel](references/contracts/kernel/v1.md). Do not apply terse's line-by-line format to prose mode, and do not apply prose's full-sentence grammar to compact mode.
 
 ## Workflow
 
-1. Determine the mode.
-   - Use it directly if the request names one explicitly: `prose`, `terse`, `compact`, or a synonym.
-     - "readable docs" → `prose`
-     - "dense" / "on-point" / "technical spec" → `terse`
-     - "telegraphic" / "caveman" / "compact context" → `compact`
-   - Otherwise, propose a mode from the content type:
-     - User-facing docs and feature explanations → `prose`
-     - Procedures, manuals, API/technical docs, warnings → `terse`
-     - Requirements, specs, project-context files, system prompts → `compact`
-   - Confirm the proposed mode with the user before writing. The wrong mode changes the whole output.
-2. Before drafting, work out the distinct ideas in the source: facts, decisions, numbers, causal links, each counted once. Merge or drop anything that only restates a point already made, sets up what you are about to say, or summarizes what you just said. Write from this reduced set of ideas, not from the original wording. This step is why the output ends up shorter without losing meaning — do not skip it, even for a short source.
-3. Read the reference file for the chosen mode and draft from the reduced idea set, following that reference's rules exactly.
-4. When `vale` is installed, run `scripts/lint.sh MODE FILE` (see [Structural linting](#structural-linting)) and fix every error-level finding. Warnings and suggestions are advisory — apply them when they hold up, and note the ones you deliberately leave.
-5. Run the reference's self-check section against the result. Fix anything that fails before delivering.
-6. State which mode you used. In `compact` mode, also state the symbol legend if one was used, so the reader can decode it.
+On activation, follow [references/standalone-workflow.md](references/standalone-workflow.md) in full. It is the complete procedure: determining the mode, reducing the source to its distinct ideas, loading the kernel plus the selected mode's profile, drafting, linting, reviewing the result before delivery, and reporting which mode was used.
+
+A consumer skill that already knows its required profile does not need the standalone workflow — it loads its own compiled contract instead.
 
 ## Structural linting
 
@@ -52,10 +40,9 @@ Read [references/linting.md](references/linting.md) for the full rule layout, be
 
 ## Cross-cutting rules (all modes)
 
+The [kernel](references/contracts/kernel/v1.md) owns meaning preservation (negation, conditions, sequence, numbers, identifiers, commands, code, quotations) and idea reduction for every mode. These rules cover what it does not:
+
 - Use headings, bullet lists, numbered steps, or tables wherever the source has a natural grouping, sequence, or set of alternatives. A reader scans structure faster than a paragraph, in every mode including `prose`. Reserve plain paragraphs for content that is genuinely a single flowing argument.
-- Keep code, commands, identifiers, numeric values, and quoted text exact and unmodified, regardless of mode.
-- Never drop negation (`not`/`no`/`never`/`must not`) or logical connectives (`if`/`unless`/`and`/`or`/`except`) to save words — compress around them, not them.
 - Never guess at meaning to compress further — an unresolved ambiguity is a failure in every mode, most of all in `compact`.
-- When rewriting existing text, preserve its factual content. Tone level changes form, not meaning.
 
 Read [the changelog](changelog.md) only when reviewing this skill's version history or preparing a revision. Read [gaps.md](gaps.md) only when reviewing what the linter cannot check.
