@@ -1,5 +1,10 @@
 # Changelog
 
+- `3.3.1` — Recompiled `references/tone.md`'s `Report tone` section after `egai-write-tone` restored rules its `terse-report` and kernel `v1` contracts had dropped (logical-connective and sequence-marker coverage).
+- `3.3.0`
+  - Compiled a pinned `terse-report` tone contract into a new `references/tone.md`, tracked in `tone-contracts.json`.
+  - Replaced `SKILL.md`'s stale `egai-write-tone` "terse mode" line, which pointed at mode files the `egai-write-tone` rewrite removed, with an instruction to read `references/tone.md`'s Kernel plus Report tone.
+  - Documented the compiled Report tone dependency in `README.md`.
 - `3.2.1`
   - Phase dispatch now spawns an `egai-task-reader` sub-agent for a phase's execution units, instead of running `taskctl card` on each task.
   - Stacked Phase Mode now spawns `egai-task-reader` sub-agents for branch/PR-title and PR-body, instead of calling `taskctl` directly.
