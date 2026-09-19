@@ -1,5 +1,17 @@
 # Changelog
 
+- `3.5.2` — Recompiled `references/tone.md`'s `Context file tone` and `Report tone` sections: `egai-write-tone` restored rules its `v1` contracts had dropped (`compact` regained auxiliary-verb dropping and a symbol-legend example; `terse-report`'s kernel gained logical-connective and sequence-marker coverage).
+- `3.5.1`
+  - `references/tone.md`'s compiled sections now pin `egai-write-tone`'s `v1` contracts (`kernelRevision: 1`, every profile at `revision: 1`) instead of `v2`: `v2`'s only change (a bold label instead of a heading) was folded back into `v1` in place, since nothing had a reason to keep pinning both.
+- `3.5.0`
+  - Moved the compiled `Context file tone` and `Report tone` sections out of `SKILL.md` into `references/tone.md`, compiled from `tone-contracts.json`'s new per-file `kernelRevision`-plus-`profiles` schema, pinned to the `v2` contracts.
+  - Replaced the inline compiled sections with one instruction to read `references/tone.md` before drafting, naming Kernel plus the matching profile section per artifact.
+- `3.4.0`
+  - Added the `` `[tone-contract]` `` heading marker and pinned `kernelRevision` to `## Context file tone` and `## Report tone`, matching updated `tone-contracts.json` entries.
+  - Re-ran `write`; both compiled sections now embed the canonical kernel before their pinned profile content.
+- `3.3.0`
+  - Compiled the pinned `compact` and `terse-report` tone contracts into `## Context file tone` and `## Report tone`, tracked in `tone-contracts.json`.
+  - Removed the runtime `egai-write-tone` invocation; tone rules load with this file instead of a nested skill activation.
 - `3.2.2`
   - Excluded work-tracking provenance, including tasks, phases, Jira tickets, pull requests, and delivery status.
   - Required compact current facts instead of rationale, background, or implementation narratives.
