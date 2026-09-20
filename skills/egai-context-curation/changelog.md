@@ -1,5 +1,6 @@
 # Changelog
 
+- `3.5.3` — Excluded mutable inventory counts from context unless an exact value governs current behavior or a durable constraint.
 - `3.5.2` — Recompiled `references/tone.md`'s `Context file tone` and `Report tone` sections: `egai-write-tone` restored rules its `v1` contracts had dropped (`compact` regained auxiliary-verb dropping and a symbol-legend example; `terse-report`'s kernel gained logical-connective and sequence-marker coverage).
 - `3.5.1`
   - `references/tone.md`'s compiled sections now pin `egai-write-tone`'s `v1` contracts (`kernelRevision: 1`, every profile at `revision: 1`) instead of `v2`: `v2`'s only change (a bold label instead of a heading) was folded back into `v1` in place, since nothing had a reason to keep pinning both.

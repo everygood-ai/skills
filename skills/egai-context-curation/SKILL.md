@@ -2,7 +2,7 @@
 name: egai-context-curation
 description: Build and maintain compact, evidence-based Markdown context for a project or codebase area. Use when asked to extract context from scratch, update context after source changes, improve existing context quality, or audit context for stale claims. Do not use for implementation planning, code changes, or general documentation that is not maintained as project context.
 metadata:
-  version: "3.5.2"
+  version: "3.5.3"
 ---
 
 # EGAI Context Curation
@@ -12,6 +12,12 @@ Maintain a small, indexed context set of cross-file knowledge that takes time to
 ## Apply the Evidence Threshold
 
 Capture a fact only when establishing it requires reading multiple files or inferring a relationship that no one file states. Never capture a fact whose relevant content is clear from one file, even when that fact is useful or frequently needed. Treat this as a capture threshold, not merely a preference for brief wording.
+
+## Exclude Volatile Counters
+
+Do not record snapshot counts that summarize mutable sets. Examples include counts of skills, widgets, files, routes, and tests. State durable structure or relationships without a count. Remove volatile counters when updating their entries.
+
+Keep an exact count only when current behavior depends on it. Also keep it for compatibility, capacity, or threshold constraints. Record the governing constraint, not an incidental inventory total.
 
 ## Exclude Work Tracking
 
@@ -271,6 +277,7 @@ Omit `[CONTEXT_FILE ...]` to validate every `.md` file present in the context di
 - Write facts, not explanations. Exclude work-tracking references, rationale, background, examples, and change history.
 - Keep every claim verifiable against current project evidence.
 - Apply the evidence threshold: capture only a fact that requires reading multiple files or inferring a relationship no one file states. Never capture a fact clear from one file.
+- Omit snapshot counts for mutable inventories. Keep an exact count only when current behavior or a constraint depends on it.
 - In `architecture.md` and `domain.md`, state what exists. An absence claim such as "No Redux" drifts silently once the project adopts the pattern, because nothing about adoption removes it. Route a deliberate prohibition through `rules.md` instead, as a `MUST NOT` with its reason.
 - Do not copy implementation blocks. Use exact syntax only when a one-line identifier or command is necessary.
 - Keep each fact in one context file and link related material instead of duplicating it.
