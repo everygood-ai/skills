@@ -36,6 +36,7 @@ File set open-ended. Split by project shape with topic names such as `frontend-a
 
 - Capture only facts that require multiple files or relationship inference no one file states. Never capture a fact clear from one file.
 - Write one current fact or constraint per entry. Use paths for verification instead of rationale, background, examples, or implementation narratives.
+- Omit snapshot counts for mutable inventories. Keep a count only when behavior or a durable constraint depends on its exact value.
 - Never include tasks, phases, plans, Jira or other ticket references, pull requests, commits, or delivery status. They may set inspection scope but are not context evidence.
 - Keep one fact in one context file.
 - Mark inference not directly established as `[inferred — verify]`.
