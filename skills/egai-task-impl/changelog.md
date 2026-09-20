@@ -1,5 +1,6 @@
 # Changelog
 
+- `7.0.5` — Excluded mutable inventory counts from code comments unless an exact value governs behavior or an enforced constraint.
 - `7.0.4` — Recompiled `references/tone.md`'s `Report tone` section after `egai-write-tone` restored rules its `terse-report` and kernel `v1` contracts had dropped (logical-connective and sequence-marker coverage).
 - `7.0.3`
   - Compiled a Report tone contract in `references/tone.md`, pinned to `egai-write-tone`'s terse-report profile, for the workflow completion report.

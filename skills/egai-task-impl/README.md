@@ -8,7 +8,7 @@ The preferred input is a filesystem path: exactly one task-file path per invocat
 
 `egai-task-impl` calls [egai-task-reader](../egai-task-reader/README.md)'s `taskctl ac` inline instead of bundling its own script. This verifies acceptance criteria without re-reading the task body. See egai-task-reader's own README for its full command surface.
 
-During implementation, the skill avoids comments that merely repeat clear code. When a comment is needed to preserve non-obvious intent or a constraint, it invokes [egai-write-tone](../egai-write-tone/README.md) in compact mode before drafting it, as a live invocation rather than a compiled tone contract.
+During implementation, the skill avoids comments that merely repeat clear code. When a comment is needed to preserve non-obvious intent or a constraint, it invokes [egai-write-tone](../egai-write-tone/README.md) in compact mode before drafting it, as a live invocation rather than a compiled tone contract. Comments omit mutable inventory counts unless code behavior or an enforced constraint depends on the exact value.
 
 The skill drafts its own completion report, including the Incomplete Tasks report, in a compiled terse-report tone contract; see [references/tone.md](references/tone.md).
 
