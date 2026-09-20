@@ -1,5 +1,6 @@
 # Changelog
 
+- `2.8.4` — Made descriptions compact activation indices with concrete triggers and only necessary boundaries.
 - `2.8.3` — Recompiled `references/tone.md`'s `README tone` and `Changelog tone` sections after `egai-write-tone` restored rules its `v1` contracts had dropped (`prose` regained active voice, no-summary, and no-hedging; `terse` regained the semicolon-split rule).
 - `2.8.2`
   - Required design and tone-contract rationale to stay in the delivery report, never in `SKILL.md`, `README.md`, or `changelog.md`.

@@ -16,6 +16,8 @@ Use this skill for any of the following:
 
 The trigger applies even when a request names a plan or document instead of the skill itself. It still applies as long as the change lands inside a skill directory.
 
+Each frontmatter description is a compact activation index. It names the capability, concrete trigger terms, and necessary selection boundaries. The body holds workflow, implementation, output, and validation detail.
+
 ## Skill Structure
 
 A skill is a directory with `SKILL.md` at its root. Alongside it:
@@ -32,7 +34,7 @@ A skill is a directory with `SKILL.md` at its root. Alongside it:
 ## Workflow
 
 1. Scope the capability from the request. Split unrelated capabilities into separate skills.
-2. Write `SKILL.md`: frontmatter (`name`, `description`, `metadata.version`), then imperative body instructions.
+2. Write frontmatter: `name`, an activation-focused `description`, and `metadata.version`. Then write imperative body instructions.
 3. Draft the `SKILL.md` prose with `egai-write-tone` in `prose` mode.
 4. Pick one version increment for the whole delivered change. Draft the `changelog.md` entry with `egai-write-tone` in `terse` mode.
 5. Create or update `README.md` with `egai-write-tone` in `prose` mode, whenever the skill is new or its behavior changed.
