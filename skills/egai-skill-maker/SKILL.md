@@ -1,9 +1,9 @@
 ---
 name: egai-skill-maker
-description: Create, revise, and validate portable Agent Skills that follow the agentskills.io specification, including each skill's README.md. Use when asked to design a new skill, add a feature or mode to an existing skill, carry out a task plan, spec, or research document that changes a skill's SKILL.md, scripts, references, or assets, organize skill resources, fix skill metadata or structure, check a skill for specification compliance, or write or refresh a skill's README.md. Triggers even when the request names a plan or document rather than the skill directly, as long as the concrete change lands inside a skill directory.
+description: Create, revise, and validate portable Agent Skills and their README.md files. Use for requests to create or change skill files or metadata, implement plans or specs affecting a skill directory, or check skill-spec compliance.
 compatibility: Requires the skill-validator CLI; commands documented here are verified with v1.6.0.
 metadata:
-  version: "2.8.3"
+  version: "2.8.4"
 ---
 
 # EGAI Skill Maker
@@ -176,13 +176,19 @@ Create `README.md` beside `SKILL.md` for every skill this workflow creates or up
 
 Treat `description` as the primary activation mechanism because agents normally see it before loading the body.
 
-Write it to answer:
+Keep it as a compact activation index. It occupies shared discovery context. The body is unavailable until the description selects the skill.
+
+The specification allows 1-1024 characters. Aim for 350 characters or fewer. Exceed that target only when a shorter description would cause a likely misroute.
+
+Write one capability sentence and one activation sentence. Together, answer:
 
 - What does this skill enable?
 - When should it activate?
 - What user language, file types, tools, or task contexts distinguish it?
 
-Put activation guidance in `description`, not in a body section that is unavailable before activation.
+Use concrete user terms and selection signals. Add one brief exclusion only when it resolves a likely overlap. Name an alternative skill only when its name improves routing.
+
+Put workflow steps, internal algorithms, output layouts, validation machinery, resource inventories, and repeated examples in the body or a reference. Before delivery, remove every phrase that does not change selection.
 
 ### Body
 
