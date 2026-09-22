@@ -2,7 +2,7 @@
 name: egai-task-impl
 description: Implement one schema-valid task file produced by egai-tasks-writing. Use when given a single local task-file path and asked to read the task, implement its scope and deliverable, verify its acceptance criteria, and synchronize its checkbox in the phase's index.md. Do not use to write plans, schedule multiple tasks, or implement an unstructured request.
 metadata:
-  version: "7.0.5"
+  version: "7.0.7"
 ---
 
 # EGAI Task Impl
