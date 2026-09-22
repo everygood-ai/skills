@@ -1,5 +1,7 @@
 # Changelog
 
+- `7.0.7` — Added maintainer documentation for single-task execution, acceptance evidence, context synchronization, and runner checkbox ownership.
+- `7.0.6` — Moved the editable package to `skills-src` and replaced the legacy report-tone target with pinned source capability placeholders; generated behavior is unchanged.
 - `7.0.5` — Excluded mutable inventory counts from code comments unless an exact value governs behavior or an enforced constraint.
 - `7.0.4` — Recompiled `references/tone.md`'s `Report tone` section after `egai-write-tone` restored rules its `terse-report` and kernel `v1` contracts had dropped (logical-connective and sequence-marker coverage).
 - `7.0.3`

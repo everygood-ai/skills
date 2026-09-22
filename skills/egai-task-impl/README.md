@@ -17,3 +17,7 @@ The skill drafts its own completion report, including the Incomplete Tasks repor
 `egai-task-impl` is the last stage of the task pipeline: it implements one task's body after [egai-tasks-writing](../egai-tasks-writing/README.md) has authored the plan and [egai-tasks-runner](../egai-tasks-runner/README.md) has dispatched it. When `egai-tasks-runner` dispatches a task directly, it owns that task's `index.md` checkbox, so `egai-task-impl` reports its outcome without editing `index.md`. When invoked standalone, without a dispatching runner, `egai-task-impl` updates the checkbox itself.
 
 See [SKILL.md](SKILL.md) for the full workflow and the incomplete-task handling.
+
+## Maintainer documentation
+
+See [docs/task-execution-contract.md](docs/task-execution-contract.md) for single-task inputs, acceptance evidence, checkbox ownership, and runner boundaries.
