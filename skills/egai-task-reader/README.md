@@ -32,3 +32,7 @@ This skill defines two ways to call it, chosen by whether the caller needs the a
 `egai-task-reader` is a shared dependency, not a stage in the task pipeline. [egai-tasks-writing](../egai-tasks-writing/README.md), [egai-task-impl](../egai-task-impl/README.md), and [egai-tasks-runner](../egai-tasks-runner/README.md) each call it for a different need: plan validation, criteria verification, and phase scheduling.
 
 See [SKILL.md](SKILL.md) for the full command reference and both invocation shapes.
+
+## Maintainer documentation
+
+See [docs/task-tree-contract.md](docs/task-tree-contract.md) for task-card and index ownership, `taskctl` interfaces, and consumer boundaries.

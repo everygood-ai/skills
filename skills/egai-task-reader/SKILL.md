@@ -2,7 +2,7 @@
 name: egai-task-reader
 description: Read and validate task-card YAML frontmatter and phase structure from an egai-tasks-writing plan, without loading a task's full prose body. Use when a caller needs a task's acceptance criteria, a phase's branch/PR metadata, a phase's tasks grouped into ordered execution units, a phase's PR body, or full authoring-time validation of a plan's task cards and index.md files, sourced from task-N-*.md files and a phase's index.md. Do not use to draft task plans, implement a task's body, or orchestrate dispatch.
 metadata:
-  version: "1.1.2"
+  version: "1.1.4"
 ---
 
 # EGAI Task Reader
