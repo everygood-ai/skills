@@ -1,5 +1,7 @@
 # Changelog
 
+- `3.3.3` — Added maintainer documentation for task-tree dispatch, checkbox ownership, stacked phases, sandbox mode, and runner scripts.
+- `3.3.2` — Moved the editable package to `skills-src` and replaced the legacy report-tone target with pinned source capability placeholders; generated behavior is unchanged.
 - `3.3.1` — Recompiled `references/tone.md`'s `Report tone` section after `egai-write-tone` restored rules its `terse-report` and kernel `v1` contracts had dropped (logical-connective and sequence-marker coverage).
 - `3.3.0`
   - Compiled a pinned `terse-report` tone contract into a new `references/tone.md`, tracked in `tone-contracts.json`.

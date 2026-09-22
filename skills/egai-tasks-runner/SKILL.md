@@ -2,7 +2,7 @@
 name: egai-tasks-runner
 description: Orchestrate execution of an egai-tasks-writing plan by recursing through its node tree of index.md files. A portfolio, an epic, and a phase are each a directory with its own index.md. Use when given a path to any such node, or to a single task file, plus optional additional instructions, and asked to run, continue, or drive that work to completion. Recurses into itself for each child node, invokes egai-task-impl once per task in a phase, and keeps every index.md checkbox current. Also use when asked to run a range of phases in Stacked Phase Mode, with one git worktree, branch, and pull request per phase, chained sequentially instead of one shared working tree. Also use when asked to run the work sandboxed, printing a fresh `srt`-wrapped CLI command instead of dispatching directly. Do not use to draft task plans or to implement a task's body directly.
 metadata:
-  version: "3.3.1"
+  version: "3.3.3"
 ---
 
 # EGAI Tasks Runner
