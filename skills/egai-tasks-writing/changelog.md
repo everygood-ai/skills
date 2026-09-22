@@ -1,5 +1,9 @@
 # Changelog
 
+- `5.1.3` — Added maintainer documentation for plan layouts, task/phase ownership, context-update tasks, and validation handoff.
+
+- `5.1.2` — Moved the skill into the source-built package layout and converted its task-plan tone contract to pinned capability placeholders; behavior and rendered tone remain unchanged.
+
 - `5.1.1` — Recompiled `references/tone.md`'s `Task plan tone` section after `egai-write-tone` restored rules its `terse` and kernel `v1` contracts had dropped (the semicolon-split rule, logical-connective and sequence-marker coverage).
 - `5.1.0` — Replaced the stale `egai-write-tone` `terse`-mode invocation, broken by that skill's kernel/profile-contract rewrite, with a compiled `Task plan tone` contract in the new `references/tone.md`, pinned to the `terse` profile and tracked in `tone-contracts.json`. Task files, `index.md`, and other generated output now load fixed tone rules instead of invoking a nested skill.
 - `5.0.4` — Corrected `README.md`'s Task Frontmatter section, stale since `taskctl` moved to `egai-task-reader`. Now credits `egai-task-reader`, not `egai-task-impl`, as the schema's mechanical dependent. Fixes the `taskctl` command descriptions and drops the removed `validate-tasks.py` name.

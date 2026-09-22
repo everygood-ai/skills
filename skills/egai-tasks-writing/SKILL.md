@@ -2,7 +2,7 @@
 name: egai-tasks-writing
 description: Create execution-ready Markdown task plans from feature requests and technical specifications. Use when asked to decompose implementation work into phased, schema-valid task files with frontmatter cards, precise scope, testable acceptance criteria, a plan index, and mandatory egai-context-curation handoffs. Supports an optional epic-portfolio layout for splitting large initiatives into independently releasable epics. Do not use for implementation or external issue-tracker management.
 metadata:
-  version: "5.1.1"
+  version: "5.1.3"
 ---
 
 # EGAI Tasks Writing
