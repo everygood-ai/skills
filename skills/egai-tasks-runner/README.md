@@ -32,3 +32,7 @@ The `srt` config comes from two files:
 The generated config is a best-effort default: a plain copy of the baseline, not a per-project one. It has no package-registry domains, no third-party API domains, and nothing else specific to the project's actual needs; adding those to `.srt-settings.generated.json` before running is the user's responsibility. If a sandboxed run fails partway through on a blocked domain, add that domain to the generated file and re-run the printed `srt` command directly — re-triggering Sandbox Mode instead would regenerate the file from the baseline and discard the edit. See [references/sandbox-mode.md](references/sandbox-mode.md) for the full procedure, including the preflight checks and the reminder text printed alongside the command.
 
 See [SKILL.md](SKILL.md) for the full workflow, the group/phase/task dispatch rules, and the `index.md` ownership rules.
+
+## Maintainer documentation
+
+See [docs/plan-orchestration-model.md](docs/plan-orchestration-model.md) for dispatch ownership, run modes, script boundaries, and pipeline delegation.
