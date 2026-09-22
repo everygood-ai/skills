@@ -61,3 +61,7 @@ For each project area (frontend, mobile, and backend), spawn a fresh sub-agent. 
 6. Verify repository-instruction links and report scope, changes, and uncertainty.
 
 See [SKILL.md](SKILL.md) for full instructions. See [Context Curation for AI Agents](../../docs/post--egai-context-curation.md) for rationale and execution guidance.
+
+## Maintainer documentation
+
+Read [docs/context-maintenance-model.md](docs/context-maintenance-model.md) for evidence thresholds, context ownership, lock modes, and validation boundaries.
