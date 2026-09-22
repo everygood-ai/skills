@@ -1,5 +1,10 @@
 # Changelog
 
+- `2.8.9` — Added maintainer documentation for package resources, validator wrappers, documentation exemptions, release pairing, and link checks.
+- `2.8.8` — Updated the bundled tone-injection guidance after retiring the repository tone manifest and compiler.
+- `2.8.7` — Replaced the unpublished repository tone-manifest workflow with a bundled self-contained tone injector, and removed repository-specific authoring assumptions from the public skill.
+- `2.8.6` — Replaced the temporary self-contained `references/tone.md` source with `write-tone-kernel@1`, `write-tone-prose@1`, and `write-tone-terse@1` capability placeholders; compiled public output is unchanged.
+- `2.8.5` — Rebuilt the skill as a source package: canonical content moved to skills-src/egai-skill-maker and compiles into skills/ through the repository's skills-compiler; distributable behavior is unchanged.
 - `2.8.4` — Made descriptions compact activation indices with concrete triggers and only necessary boundaries.
 - `2.8.3` — Recompiled `references/tone.md`'s `README tone` and `Changelog tone` sections after `egai-write-tone` restored rules its `v1` contracts had dropped (`prose` regained active voice, no-summary, and no-hedging; `terse` regained the semicolon-split rule).
 - `2.8.2`
