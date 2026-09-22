@@ -2,7 +2,7 @@
 name: egai-context-curation
 description: Build and maintain compact, evidence-based Markdown context for a project or codebase area. Use when asked to extract context from scratch, update context after source changes, improve existing context quality, or audit context for stale claims. Do not use for implementation planning, code changes, or general documentation that is not maintained as project context.
 metadata:
-  version: "3.5.3"
+  version: "3.5.5"
 ---
 
 # EGAI Context Curation
