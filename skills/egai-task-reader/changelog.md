@@ -1,5 +1,7 @@
 # Changelog
 
+- `1.1.4` — Added maintainer documentation for the task-card, index-tree, and `taskctl` ownership contract.
+- `1.1.3` — Migrated the skill to the source-built package layout without changing its behavior.
 - `1.1.2` — Corrected `SKILL.md`: `taskctl` output is a fixed, deterministic format, and no `egai-write-tone` register applies to it. No compiled tone contract added.
 - `1.1.1` — Trimmed `SKILL.md` and `README.md` to drop named-consumer framing ("shared dependency," per-caller examples), keeping only the mechanics an activated agent needs. No behavior change.
 - `1.1.0`
