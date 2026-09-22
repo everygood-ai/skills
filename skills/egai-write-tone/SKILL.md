@@ -3,7 +3,7 @@ name: egai-write-tone
 description: Write or rewrite text at one of three tone levels — prose (clear, scannable documentation for product docs and guides), terse (dense, on-point technical writing, one idea per line), or compact (maximum-density compression for requirements and context files, meaning must stay unambiguous). Use when asked to write, rewrite, tighten, or compress text to a stated tone or register, or to cut a wordy draft down to size without losing meaning. Do not use for casual conversational writing, marketing copy, or creative prose.
 compatibility: Structural linting (scripts/lint.sh) requires the vale CLI; rules are verified with vale 3.17.1.
 metadata:
-  version: "3.1.3"
+  version: "3.1.5"
 ---
 
 # EGAI Write Tone

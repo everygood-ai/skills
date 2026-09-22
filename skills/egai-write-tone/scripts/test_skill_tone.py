@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import re
 import shutil
 import subprocess
@@ -13,7 +12,6 @@ LINT_SCRIPT = SCRIPTS_DIR / "lint.sh"
 SKILLS_DIR = SCRIPTS_DIR.parent.parent
 SKILL_FILES = sorted(SKILLS_DIR.glob("*/SKILL.md"))
 REPO_ROOT = SKILLS_DIR.parent
-TONE_MANIFEST_PATH = REPO_ROOT / "tone-contracts.json"
 CONTRACTS_DIR = SCRIPTS_DIR.parent / "references" / "contracts"
 KERNEL_V1 = CONTRACTS_DIR / "kernel" / "v1.md"
 PROFILE_V1_FILES = {
@@ -34,30 +32,20 @@ MARKDOWN_LINK_RE = re.compile(r"\]\(([^)]+)\)")
 VALE_INSTALLED = shutil.which("vale") is not None
 
 
-def _load_tone_manifest() -> dict:
-    if not TONE_MANIFEST_PATH.is_file():
-        return {}
-    return json.loads(TONE_MANIFEST_PATH.read_text(encoding="utf-8"))
-
-
 def _without_compiled_tone_sections(skill_file: Path, content: str) -> str:
     """Cut each compiled tone-contract section's exact pinned text out of `content`.
 
-    A compiled section (see compile-tone-contracts.py) is a verbatim, pinned
+    A compiled section is a verbatim, pinned
     profile — its own author already targets prose, terse, or compact rules
     for that section alone, not for the whole `SKILL.md`. Removing the exact
     contract text (its heading survives) keeps this test checking only the
     hand-authored prose around it.
     """
-    consumer_key = str(skill_file.relative_to(REPO_ROOT))
-    for entry in _load_tone_manifest().get(consumer_key, []):
-        contract_path = (
-            SCRIPTS_DIR.parent
-            / "references"
-            / "contracts"
-            / entry["profile"]
-            / f"v{entry['revision']}.md"
-        )
+    for contract_path in (
+        CONTRACTS_DIR / "kernel" / "v1.md",
+        *PROFILE_V1_FILES.values(),
+        TERSE_REPORT_V1,
+    ):
         if contract_path.is_file():
             content = content.replace(contract_path.read_text(encoding="utf-8"), "")
     return content

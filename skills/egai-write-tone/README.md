@@ -46,3 +46,7 @@ Same source, three outputs:
 5. Run the mode's self-check against the result.
 
 See [SKILL.md](SKILL.md) for the full instructions this skill runs on.
+
+## Maintainer documentation
+
+Read [docs/tone-contract-lifecycle.md](docs/tone-contract-lifecycle.md) for capability ownership, source placeholders, materialized contracts, and lint boundaries.

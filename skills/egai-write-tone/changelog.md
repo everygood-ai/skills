@@ -1,5 +1,7 @@
 # Changelog
 
+- `3.1.5` — Added maintainer documentation for canonical tone bundles, source placeholders, materialized contracts, and lint boundaries.
+- `3.1.4` — Rebuilt the skill as a source package: canonical kernel and profile prose moved to `capabilities/write-tone-*` bundles and compiles into `skills/` through the skills-compiler; distributable behavior is unchanged.
 - `3.1.3`
   - Restored rules dropped when the kernel was extracted from `prose`/`terse`/`compact` into their own `v1.md` files, rewording each within its 75-120-word budget.
   - `prose` regained: no summary paragraph, no hedging, active voice by default, and the em-dash-aside case for splitting sentences.
