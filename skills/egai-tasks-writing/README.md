@@ -96,3 +96,7 @@ No other frontmatter fields are permitted, and values must be double-quoted sing
 `egai-tasks-writing` is the first stage of a three-skill chain: it authors the plan tree that [egai-tasks-runner](../egai-tasks-runner/README.md) walks, dispatching sub-agents that call [egai-task-impl](../egai-task-impl/README.md) to implement each task's body. This skill only drafts plans; it never implements a task or edits an existing plan's runtime state.
 
 See [SKILL.md](SKILL.md) for the full workflow, the task file and index schemas, and the quality checks the validator enforces.
+
+## Maintainer documentation
+
+See [docs/plan-authoring-model.md](docs/plan-authoring-model.md) for plan layouts, phase/task ownership, context-update tasks, and the validation handoff.
