@@ -15,7 +15,7 @@ Apply before drafting, in every tone mode:
 
 This kernel governs meaning and idea reduction only. It defines no output
 form; mode profiles define form.
-## README tone `[tone-contract]`
+## Prose tone `[tone-contract]`
 **Prose — v1**
 
 Target: product documentation, guides, and descriptions for a general reader.
@@ -33,7 +33,7 @@ Target: product documentation, guides, and descriptions for a general reader.
   or unimportant.
 - Name the same action or concept the same way throughout. Never
   introduce a synonym for something already named.
-## Changelog tone `[tone-contract]`
+## Terse tone `[tone-contract]`
 **Terse — v1**
 
 Target: procedures, manuals, API and technical docs, and warnings where the
@@ -49,3 +49,26 @@ reader needs the point fast.
   or unimportant.
 - Use numbered steps for a sequence, and a table for anything with
   repeated structure, such as options or parameters.
+## Compact tone `[tone-contract]`
+**Compact — v1**
+
+Target: dense requirements, compact project context, and system-prompt-style
+text where token density outweighs grammaticality.
+
+- Write sentence fragments and label:value pairs instead of full clauses,
+  such as "Status: ready." Each fragment must resolve to exactly one
+  reading.
+- Drop articles ("a," "an," "the"), the linking verb "be," and auxiliary
+  verbs when unambiguous. Prefer bare stems or simple tense.
+- Omit a repeated subject or verb across parallel items when the lead-in
+  makes it recoverable.
+- Allow noun stacks over three words when unambiguous. Hyphenate compound
+  modifiers to show grouping.
+- Define any symbol in a legend before its first use (`→` then, `+` and),
+  and never reuse a symbol for two meanings in the same document.
+## Terse report tone `[tone-contract]`
+**Terse Report — v1**
+
+- Lead with the outcome.
+- State each result once.
+- Include only changed artifacts, verification, and unresolved issues.

@@ -38,11 +38,20 @@ A skill is a directory with `SKILL.md` at its root. Alongside it:
 3. Draft the `SKILL.md` prose with `egai-write-tone` in `prose` mode.
 4. Pick one version increment for the whole delivered change. Draft the `changelog.md` entry with `egai-write-tone` in `terse` mode.
 5. Create or update `README.md` with `egai-write-tone` in `prose` mode, whenever the skill is new or its behavior changed.
-6. Validate with `scripts/validate.sh`, and validate `changelog.md` with `scripts/validate_changelog.py`.
-7. Test the skill on representative requests, then run the repository's full test suite.
+6. When the target must carry its own tone guidance, use the bundled injector instead of an external repository compiler.
+7. Validate with `scripts/validate.sh`, and validate `changelog.md` with `scripts/validate_changelog.py`.
+8. Test the skill on representative requests, then run the target project's applicable test suite.
 
 See [SKILL.md](SKILL.md) for the full procedure: naming rules, frontmatter constraints, the version and changelog policy, and the validation wrapper's exit codes.
 
 ## Validation
 
 `scripts/validate.sh` wraps the `skill-validator` CLI's structure, content, and contamination checks. It downgrades an orphan-resource warning naming a `scripts/test_*.py` file, `changelog.md`, `gaps.md`, or `README.md` to an `info` diagnostic. An activated agent never needs a runtime pointer to those dev-time-only files.
+
+## Self-contained tone guidance
+
+When a delivered skill must create consistently styled text without relying on a runtime `egai-write-tone` installation, use [references/tone-injection.md](references/tone-injection.md). The bundled script copies the pinned Kernel and selected profile into the target skill's own `references/tone.md`.
+
+## Maintainer documentation
+
+Read [docs/skill-package-maintenance.md](docs/skill-package-maintenance.md) for package ownership, validator boundaries, documentation resources, release pairing, and link checks.

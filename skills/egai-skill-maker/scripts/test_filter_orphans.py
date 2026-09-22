@@ -19,6 +19,14 @@ def orphan_warning(file: str) -> dict:
     }
 
 
+def docs_directory_warning() -> dict:
+    return {
+        "level": "warning",
+        "category": "Structure",
+        "message": "unknown directory: docs/ (contains 1 file) — agents using the standard skill structure won't discover these files; should this be assets/?",
+    }
+
+
 class FilterOrphansTests(unittest.TestCase):
     def run_filter(self, report: dict) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
@@ -29,13 +37,15 @@ class FilterOrphansTests(unittest.TestCase):
             check=False,
         )
 
-    def test_exempts_test_file_gaps_changelog_and_readme(self) -> None:
+    def test_exempts_dev_time_files(self) -> None:
         report = {
             "results": [
                 orphan_warning("scripts/test_helper.py"),
                 orphan_warning("gaps.md"),
                 orphan_warning("changelog.md"),
                 orphan_warning("README.md"),
+                orphan_warning("docs/maintainer-guide.md"),
+                docs_directory_warning(),
             ]
         }
         result = self.run_filter(report)
