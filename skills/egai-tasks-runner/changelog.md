@@ -1,5 +1,6 @@
 # Changelog
 
+- `3.4.0` — Replaced recursive runner-agent dispatch with one foreground coordinator that walks groups and phases locally, then waits on direct terminal reader and implementation workers. Group traversal is serialized; task units retain declared parallelism. Applied the same topology to Stacked Phase Mode and require its task workers to use the explicit worktree path.
 - `3.3.3` — Added maintainer documentation for task-tree dispatch, checkbox ownership, stacked phases, sandbox mode, and runner scripts.
 - `3.3.2` — Moved the editable package to `skills-src` and replaced the legacy report-tone target with pinned source capability placeholders; generated behavior is unchanged.
 - `3.3.1` — Recompiled `references/tone.md`'s `Report tone` section after `egai-write-tone` restored rules its `terse-report` and kernel `v1` contracts had dropped (logical-connective and sequence-marker coverage).
