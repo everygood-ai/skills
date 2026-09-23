@@ -1,18 +1,18 @@
 # egai-tasks-runner
 
-Orchestrates execution of an [egai-tasks-writing](../egai-tasks-writing/README.md) plan by walking its node tree. A portfolio, an epic, and a phase are each a directory with its own `index.md`; a task is a leaf file. The skill dispatches one sub-agent per node, invokes [egai-task-impl](../egai-task-impl/README.md) once per task, and keeps every `index.md` checkbox current.
+Orchestrates execution of an [egai-tasks-writing](../egai-tasks-writing/README.md) plan by walking its node tree in one foreground coordinator. A portfolio, an epic, and a phase are each a directory with its own `index.md`; a task is a leaf file. The skill invokes terminal workers for [egai-task-impl](../egai-task-impl/README.md) once per task and keeps every `index.md` checkbox current.
 
 Every status update and report this skill produces follows [egai-write-tone](../egai-write-tone/README.md)'s compiled Report tone, baked into [references/tone.md](references/tone.md) instead of invoked live per run.
 
 ## Input
 
-The input is a single filesystem path: a node's directory, its `index.md` file, or a task file, plus optional free-text instructions. The skill resolves relative paths from the current workspace and forwards the instructions, unchanged, to every sub-agent it spawns at every recursion level.
+The input is a single filesystem path: a node's directory, its `index.md` file, or a task file, plus optional free-text instructions. The skill resolves relative paths from the current workspace and forwards the instructions unchanged to every terminal worker it spawns.
 
 ## Task Pipeline
 
-`egai-tasks-runner` is the middle stage of the task pipeline. It walks the tree [egai-tasks-writing](../egai-tasks-writing/README.md) authored and dispatches sub-agents down that tree, calling [egai-task-impl](../egai-task-impl/README.md) once per task. Exactly one runner instance writes to any given `index.md`: the instance that dispatched a child owns that child's checkbox in the parent's `index.md`.
+`egai-tasks-runner` is the middle stage of the task pipeline. Its single foreground coordinator walks the tree [egai-tasks-writing](../egai-tasks-writing/README.md) authored and calls [egai-task-impl](../egai-task-impl/README.md) once per task. Exactly one runner instance writes to any given `index.md`: the foreground coordinator owns its checkbox state. It never delegates a group or phase to another runner, because a background coordinator can return before its own workers report.
 
-Phase dispatch also depends on [egai-task-reader](../egai-task-reader/README.md), which groups a phase's tasks into ordered execution units before dispatch. The skill reaches it through a sub-agent dispatch, the same way it reaches `egai-task-impl`.
+Phase dispatch also depends on [egai-task-reader](../egai-task-reader/README.md), which groups a phase's tasks into ordered execution units before dispatch. The coordinator spawns it and `egai-task-impl` only as direct, terminal workers, then waits for each unit's reports before advancing.
 
 ## Run Modes
 

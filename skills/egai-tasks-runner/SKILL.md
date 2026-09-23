@@ -1,13 +1,13 @@
 ---
 name: egai-tasks-runner
-description: Orchestrate execution of an egai-tasks-writing plan by recursing through its node tree of index.md files. A portfolio, an epic, and a phase are each a directory with its own index.md. Use when given a path to any such node, or to a single task file, plus optional additional instructions, and asked to run, continue, or drive that work to completion. Recurses into itself for each child node, invokes egai-task-impl once per task in a phase, and keeps every index.md checkbox current. Also use when asked to run a range of phases in Stacked Phase Mode, with one git worktree, branch, and pull request per phase, chained sequentially instead of one shared working tree. Also use when asked to run the work sandboxed, printing a fresh `srt`-wrapped CLI command instead of dispatching directly. Do not use to draft task plans or to implement a task's body directly.
+description: Orchestrate execution of an egai-tasks-writing plan by walking its node tree of index.md files in one coordinator. A portfolio, an epic, and a phase are each a directory with its own index.md. Use when given a path to any such node, or to a single task file, plus optional additional instructions, and asked to run, continue, or drive that work to completion. Traverses child nodes in the current runner, invokes terminal egai-task-reader and egai-task-impl workers directly, and keeps every index.md checkbox current. Also use when asked to run a range of phases in Stacked Phase Mode, with one git worktree, branch, and pull request per phase, chained sequentially instead of one shared working tree. Also use when asked to run the work sandboxed, printing a fresh `srt`-wrapped CLI command instead of dispatching directly. Do not use to draft task plans or to implement a task's body directly.
 metadata:
-  version: "3.3.3"
+  version: "3.4.0"
 ---
 
 # EGAI Tasks Runner
 
-This skill runs one `egai-tasks-writing` plan by walking its node tree. A portfolio, an epic, and a phase are all directories with their own `index.md` file. A task is a leaf file, not a directory. This skill dispatches sub-agents down the tree and keeps every `index.md` file current. It delegates plan drafting to `egai-tasks-writing`. It delegates task-body implementation to `egai-task-impl`.
+This skill runs one `egai-tasks-writing` plan by walking its node tree in the caller's runner. A portfolio, an epic, and a phase are all directories with their own `index.md` file. A task is a leaf file, not a directory. This skill keeps every `index.md` file current and dispatches only terminal reader and implementation workers. It delegates plan drafting to `egai-tasks-writing`. It delegates task-body implementation to `egai-task-impl`.
 
 Read [references/tone.md](references/tone.md) before drafting. Apply its Kernel plus [Report tone](references/tone.md#report-tone-tone-contract) to every status update and report this skill produces.
 
@@ -22,7 +22,7 @@ Accept the following input:
 - One filesystem path: a node's directory, its `index.md` file, or a task file.
 - Optional additional instructions, given as free text.
 
-Resolve relative paths from the current workspace. Forward the additional instructions to every sub-agent this skill spawns. Keep the instructions unchanged at every recursion level.
+Resolve relative paths from the current workspace. Forward the additional instructions unchanged to every terminal worker this skill spawns.
 
 ## Classify the Path
 
@@ -38,19 +38,20 @@ Switch on the printed kind:
 
 Read the node's `index.md` for its child list and any `Depends on` relationships between children.
 
-- Before spawning a child, set that child's checkbox in this node's `index.md` to `[~]`.
-- Spawn one `egai-tasks-runner` sub-agent for each child. Pass that child's path and the forwarded instructions. A child with no unmet `Depends on` relationship may run concurrently with other such children, because each child owns its own `index.md` file. Wait for a depended-on child's sub-agent to finish before you start a dependent one.
-- On each report, set that child's checkbox to `[x]` when the child completed. Set it back to `[ ]` when the child is blocked.
-- If a child's sub-agent reports a blocker, halt only the children that depend on it. Let unrelated children continue.
+- Before processing an eligible child, set that child's checkbox in this node's `index.md` to `[~]`.
+- Classify and process that child in this same runner: descend into a child group, apply the Phase procedure to a child phase, or apply the Task procedure to a child task. Do not spawn an `egai-tasks-runner` sub-agent for any child.
+- Process eligible children one at a time. After a child completes, set its checkbox to `[x]`; when it is blocked, restore `[ ]`. If a child is blocked, halt only children that depend on it, then continue with demonstrably independent children.
+
+The serialized group traversal is intentional. A runner is a coordinator, not a background worker: a background runner that spawns its own background workers can be returned to its parent before those workers report. Task parallelism remains available inside a phase, where the single foreground coordinator waits for terminal task reports.
 
 ### Phase
 
-Spawn one `egai-task-reader` sub-agent. Give it the phase's path and ask it, in plain language, for the phase's tasks grouped into ordered execution units. The sub-agent reports back an ordered list of units. Each unit is a list of task IDs and files to dispatch concurrently. Run the units in the order reported.
+Spawn one terminal `egai-task-reader` worker. Give it the phase's path and ask it, in plain language, for the phase's tasks grouped into ordered execution units. Wait for its report before proceeding. The report is an ordered list of units. Each unit is a list of task IDs and files to dispatch concurrently. Run the units in the order reported.
 
 For each unit, in order:
 
 - Before spawning, set that task's checkbox in this phase's `index.md` to `[~]`. See [Index.md Ownership](#indexmd-ownership).
-- Spawn one sub-agent per task in the unit. Spawn the sub-agents concurrently for a parallel batch, or alone for a sequential task. Instruct each sub-agent to invoke `egai-task-impl` on the task's path, forward the additional instructions, and report its outcome without editing `index.md`.
+- Spawn one terminal implementation worker per task in the unit. Spawn the workers concurrently for a parallel batch, or alone for a sequential task. Instruct each worker to invoke `egai-task-impl` on the task's path, forward the additional instructions, report its outcome without editing `index.md`, and never spawn another `egai-tasks-runner`.
 - On each report, set that task's checkbox to `[x]` when every acceptance criterion is verified. Set it back to `[ ]` when any criterion is unproven.
 - When a task is left unproven, apply `egai-task-impl`'s Incomplete Tasks rule. Record the blocker. Stop before any task that depends on it. Continue only with later tasks that are demonstrably independent.
 
@@ -58,7 +59,7 @@ For each unit, in order:
 
 If the task belongs to a phase that has an `index.md` file, set its checkbox to `[~]` before spawning.
 
-Spawn one sub-agent that invokes `egai-task-impl` on the task's path. Forward the additional instructions. Instruct the sub-agent not to edit `index.md`. See [Index.md Ownership](#indexmd-ownership).
+Spawn one terminal implementation worker that invokes `egai-task-impl` on the task's path. Forward the additional instructions. Instruct the worker not to edit `index.md` and never to spawn another `egai-tasks-runner`. See [Index.md Ownership](#indexmd-ownership).
 
 When an `index.md` file tracks the task, update its checkbox from the sub-agent's report, the same way as inside a phase. Otherwise, report the outcome without an index update.
 
@@ -84,9 +85,19 @@ Once triggered, read [references/sandbox-mode.md](references/sandbox-mode.md). I
 
 `egai-task-impl` normally edits a task's own checkbox as part of its workflow. This skill takes over that responsibility whenever it dispatches individual tasks or child nodes itself, so exactly one runner instance writes to any given `index.md` file.
 
-- Tell every sub-agent, at every level, to report its outcome and leave `index.md` untouched.
+- Tell every terminal worker to report its outcome and leave `index.md` untouched.
 - Use the checkbox states from `egai-task-impl`'s Index Checkboxes section: `[ ]` for pending, `[~]` for in progress, `[x]` for done.
 - The runner instance that dispatched a child is the only one that edits that child's checkbox. It edits that checkbox in the parent's own `index.md`, based on the child's report.
+
+## Worker Topology
+
+Keep one foreground `egai-tasks-runner` coordinator for an entire normal or stacked run. It may recurse through the plan logically, but it must never delegate that recursion to another runner agent.
+
+- A coordinator may spawn `egai-task-reader` workers and `egai-task-impl` workers directly, then wait for every worker in a unit before changing state or returning a report.
+- A reader or implementation worker is terminal for orchestration purposes. Do not ask it to run this skill, manage a phase, or spawn work on behalf of the coordinator.
+- Never report a phase or group as complete, in progress, or blocked based only on a child runner handoff. Completion is determined from the terminal reader and implementation reports that the foreground coordinator received.
+
+This topology avoids host products that force a background-aware coordinator to hand control back while its own background children remain active. When a host cannot wait for direct workers, run the affected reader or task implementation inline in the coordinator; preserve the same ordering and checkbox ownership.
 
 ## Reporting
 
