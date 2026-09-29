@@ -35,7 +35,9 @@ File set open-ended. Split by project shape with topic names such as `frontend-a
 ## Capture rules
 
 - Capture only facts that require multiple files or relationship inference no one file states. Never capture a fact clear from one file.
-- Write one current fact or constraint per entry. Use paths for verification instead of rationale, background, examples, or implementation narratives.
+- Give each independently reviewable fact its own list item. Group related facts under a compact parent with nested items for branches, mechanics, consumers, and skip conditions; never pack them into one long sentence.
+- Read [entry structure](references/entry-structure.md) for the parent-and-child Markdown pattern.
+- Name entries for cross-file behavior, ownership, or consequences; link a code file only as an optional verification anchor, never through a private implementation symbol.
 - Omit snapshot counts for mutable inventories. Keep a count only when behavior or a durable constraint depends on its exact value.
 - Never include tasks, phases, plans, Jira or other ticket references, pull requests, commits, or delivery status. They may set inspection scope but are not context evidence.
 - Keep one fact in one context file.
