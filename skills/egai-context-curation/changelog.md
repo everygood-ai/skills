@@ -1,5 +1,7 @@
 # Changelog
 
+- `3.5.7` — Required semantic context claims; private code identifiers are excluded, while important implementation locations may use code-file links for verification.
+- `3.5.6` — Required nested Markdown entries for independently reviewable context facts, with a compact architecture example for branches, mechanics, consumers, and skip conditions.
 - `3.5.5` — Added maintainer documentation for evidence thresholds, context ownership, lock modes, and length validation.
 - `3.5.4` — Rebuilt the skill as a source package: `references/tone.md` now compiles from the `write-tone-kernel@1`, `write-tone-compact@1`, and `write-tone-terse-report@1` capability placeholders; distributable behavior is unchanged.
 - `3.5.3` — Excluded mutable inventory counts from context unless an exact value governs current behavior or a durable constraint.

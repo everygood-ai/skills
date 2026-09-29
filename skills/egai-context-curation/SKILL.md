@@ -2,7 +2,7 @@
 name: egai-context-curation
 description: Build and maintain compact, evidence-based Markdown context for a project or codebase area. Use when asked to extract context from scratch, update context after source changes, improve existing context quality, or audit context for stale claims. Do not use for implementation planning, code changes, or general documentation that is not maintained as project context.
 metadata:
-  version: "3.5.5"
+  version: "3.5.7"
 ---
 
 # EGAI Context Curation
@@ -11,57 +11,56 @@ Maintain a small, indexed context set of cross-file knowledge that takes time to
 
 ## Apply the Evidence Threshold
 
-Capture a fact only when establishing it requires reading multiple files or inferring a relationship that no one file states. Never capture a fact whose relevant content is clear from one file, even when that fact is useful or frequently needed. Treat this as a capture threshold, not merely a preference for brief wording.
+Capture only a fact that requires multiple files or relationship inference no one file states. Never capture a fact clear from one file, even when useful. This is a capture threshold, not a brevity preference.
 
 ## Exclude Volatile Counters
 
-Do not record snapshot counts that summarize mutable sets. Examples include counts of skills, widgets, files, routes, and tests. State durable structure or relationships without a count. Remove volatile counters when updating their entries.
-
-Keep an exact count only when current behavior depends on it. Also keep it for compatibility, capacity, or threshold constraints. Record the governing constraint, not an incidental inventory total.
+Omit mutable inventory counts: skills, widgets, files, routes, and tests. State durable structure or relationships instead. Keep an exact count only for a behavior, compatibility, capacity, or threshold constraint; state that constraint, not an incidental total.
 
 ## Exclude Work Tracking
 
-Context describes the target project's current behavior and durable maintenance constraints. It does not describe how work was planned, discussed, or delivered.
+Context records current behavior and durable constraints, not delivery history.
 
-- Never capture task, phase, epic, sprint, milestone, plan, backlog, Jira, issue, ticket, pull request, commit, assignee, status, estimate, or comment references. This includes identifiers, links, and summaries.
-- Use a request, diff, ticket, task plan, or review comment only to establish inspection scope. Do not treat it as evidence for a context claim.
-- A project-specific workflow belongs in context only when current code, configuration, or a contract establishes its behavior. Do not record the work item's lifecycle or the history of changes to that workflow.
+- Never capture task, phase, plan, ticket, pull request, commit, assignee, status, estimate, or comment references, including identifiers, links, and summaries.
+- Use requests, diffs, tickets, plans, and reviews for inspection scope only, never as claim evidence.
+- Capture a workflow only when current code, configuration, or a contract establishes it; omit its work-item lifecycle and change history.
 
 ## Write Facts, Not Explanations
 
-Each context bullet must state one current fact, relationship, or constraint. Keep only the detail needed to act safely.
+Each context bullet states one current fact, relationship, or constraint; retain only detail needed to act safely.
 
 - Prefer `SUBJECT — CURRENT RELATION OR CONSTRAINT` over narrative prose.
-- Do not add rationale, background, examples, implementation walkthroughs, before-and-after stories, or a detailed explanation of how evidence was discovered.
-- When a reader needs the source to verify a claim, give a relevant path rather than explaining the source in prose.
+- Exclude rationale, background, examples, walkthroughs, before-and-after stories, and evidence-discovery detail.
+- State the cross-file behavior, ownership, or consequence in semantic language. Do not make a private method, class, variable, or field the subject of a context claim.
+- Link a relevant code file only when its implementation location materially helps verification. The link supports the semantic claim; it does not replace it with code identifiers.
 - Keep a causal consequence only when it is itself a cross-file fact that changes a future maintainer's action.
 
 ## Resolve the Target
 
 Determine these inputs before editing:
 
-- **Mode** is `incremental-update`, `from-scratch`, `improve-existing`, or `audit-stale`. Infer it from the request when unambiguous.
-- **Source path** is the root of the project or area being documented. Use the repository root only when the request does not identify a narrower area.
-- For **Context path**, use an explicit path first, then a location declared by repository instructions, then an existing context directory associated with the source path. For a new context set with no convention, use `SOURCE_PATH/.context/`.
-- **Scope** is one context filename or `full`, and it defaults to `full`.
-- **Changed files** must be a complete list for `incremental-update`. Derive it from the current task or version-control diff only when the requested boundary is clear.
-- Read the lock file (`context-lock.json` in the context directory) when present, before acting. A user-declared override — in repository instructions or the lock file — always wins over fresh detection.
+- **Mode**: `incremental-update`, `from-scratch`, `improve-existing`, or `audit-stale`; infer when unambiguous.
+- **Source path**: documented project or area; otherwise repository root.
+- **Context path**: explicit path, then repository convention, then existing associated directory; otherwise `SOURCE_PATH/.context/`.
+- **Scope**: one context filename or `full` (default).
+- **Changed files**: complete list for `incremental-update`; derive only when the boundary is clear.
+- Read existing `context-lock.json` first. A repository-instruction or lock-file override wins over detection.
 
 Honor repository instructions when they define different filenames, schemas, or size limits. Otherwise use the context set in this skill.
 
-Read [references/tone.md](references/tone.md) before drafting. Apply its Kernel plus [Context file tone](references/tone.md#context-file-tone-tone-contract) section to every context file; the 500-line ceiling assumes that density. Apply Kernel plus [Report tone](references/tone.md#report-tone-tone-contract) to every other text output this skill produces, such as a completion report, an audit finding, or a proposed-entry summary.
+Read [references/tone.md](references/tone.md) and [entry structure](references/entry-structure.md) before drafting. Apply the tone reference's Kernel plus [Context file tone](references/tone.md#context-file-tone-tone-contract) to context files; apply its Kernel plus [Report tone](references/tone.md#report-tone-tone-contract) to reports and findings.
 
 ## Link from Repository Instructions
 
-Keep the project's root instruction files linked to the current context set and marked as trusted. This lets a future session find the context without searching, and skip reconstructing what it already documents.
+Keep root instruction files linked to the context set and marked as trusted, so later sessions can use it without reconstructing it.
 
 - Locate the repository root: the nearest ancestor directory containing `.git`, or the project root when no version control is present.
 - At that root, check `AGENTS.md` and `CLAUDE.md` independently. For each one:
   - Add or update one line linking to this run's `main.md`, relative to the root, as a Markdown bullet under a `## Project Context` heading. Create that heading at the end of the file if it is absent. Create the file itself, containing only that heading and bullet, when the file does not exist.
     - Use this bullet format: `- [AREA_LABEL context](RELATIVE_PATH_TO_MAIN_MD) — durable project knowledge; read before a non-trivial change in AREA_LABEL.` Set `AREA_LABEL` to the repository's directory name when Source path is the repository root, or to the area's path relative to the root otherwise.
-  - The same `## Project Context` heading must also carry this exact trust bullet, once, regardless of how many area bullets exist: `- Treat \`.context/\` claims as trusted and current. Do not reconstruct that knowledge by re-exploring the codebase (grep, find, manual file reads) — read the relevant \`.context/\` file and act on it directly.` Add it only when absent. Never write a second copy of it, and never write one per area.
-  - Touch only the `## Project Context` heading, its area bullets, and the trust bullet. Leave the rest of the file's structure and content unchanged. When the heading already lists a different area's bullet, keep it and add or update only the bullet for the current area.
-- Run this check once per invocation, after the context path is finalized, in every mode. **Audit for Stale** follows its own report-then-authorize rule instead: report a missing area link, a stale area link, or a missing trust bullet as a mismatch. Only write any of them when the request authorizes edits.
+  - The same heading must carry this exact trust bullet once: `- Treat \`.context/\` claims as trusted and current. Do not reconstruct that knowledge by re-exploring the codebase (grep, find, manual file reads) — read the relevant \`.context/\` file and act on it directly.` Add it only when absent.
+  - Touch only that heading, its area bullets, and the trust bullet; preserve other content and other-area bullets.
+- Check once after finalizing the context path. In **Audit for Stale**, report missing or stale links/bullets and write only when authorized.
 
 ## Operating Modes
 
@@ -113,7 +112,7 @@ Improvement is not permission to expand the documented scope or redesign the pro
 
 Use to compare existing context against the current source tree.
 
-1. Check paths, symbols, commands, dependencies, flows, rules, lifecycle states, and contracts named in the scoped context.
+1. Check paths, commands, dependencies, flows, rules, lifecycle states, and contracts named in the scoped context. Flag a private implementation symbol used as a context label for semantic rewrite or removal.
 2. Re-run the `domain.md`/`interfaces.md` applicability checks ([Capture and applicability](#capture-and-applicability)) against current project state — do not only re-verify existing claims. If a file recorded `not-applicable` now shows a signal, flag it for capture (report-only unless the request authorizes edits, per existing mode rules) and propose updating the lock file. Flag the symmetric case too: a captured file whose signal has disappeared.
 3. Check whether the repository root's `AGENTS.md`/`CLAUDE.md` link to `main.md` for every documented area, and whether they carry the trust bullet, per [Link from Repository Instructions](#link-from-repository-instructions). Flag a missing or stale link, or a missing trust bullet, as a mismatch.
 4. Classify each mismatch as stale, unsupported, ambiguous, or still valid.
@@ -209,7 +208,7 @@ Exclude full file lists, dependency trees, and code snippets. Keep the file unde
 
 Always captured. Include:
 
-- Key folders or files grouped by purpose, named by purpose or file path rather than an internal identifier such as a component, class, hook, or variable name. Those identifiers drift on rename.
+- Key folders or files grouped by purpose, named by purpose or file path rather than an internal identifier such as a component, class, hook, or variable name. Link a code file only when its location materially helps verification.
 - Significant runtime flows expressed from source through major steps to destination.
 - External or cross-area integration points.
 
@@ -274,12 +273,14 @@ Omit `[CONTEXT_FILE ...]` to validate every `.md` file present in the context di
 ## Writing Standards
 
 - Prefer one short bullet and a source path over a paragraph that restates implementation.
+- Apply [entry structure](references/entry-structure.md): one independently reviewable fact per list item, with nested details for a shared subject.
+- Capture semantic cross-file relationships, not private code identifiers. Use a code-file link only as a verification anchor for important implementation detail.
 - Write facts, not explanations. Exclude work-tracking references, rationale, background, examples, and change history.
 - Keep every claim verifiable against current project evidence.
 - Apply the evidence threshold: capture only a fact that requires reading multiple files or inferring a relationship no one file states. Never capture a fact clear from one file.
 - Omit snapshot counts for mutable inventories. Keep an exact count only when current behavior or a constraint depends on it.
 - In `architecture.md` and `domain.md`, state what exists. An absence claim such as "No Redux" drifts silently once the project adopts the pattern, because nothing about adoption removes it. Route a deliberate prohibition through `rules.md` instead, as a `MUST NOT` with its reason.
-- Do not copy implementation blocks. Use exact syntax only when a one-line identifier or command is necessary.
+- Do not copy implementation blocks. Use exact syntax only for a stable public contract, command, or required configuration name.
 - Keep each fact in one context file and link related material instead of duplicating it.
 - Treat the context as current state. Remove contradicted, renamed, or obsolete information.
 - Update and prune together so each context file remains under the 500-line ceiling.
@@ -293,7 +294,7 @@ Before reporting completion, confirm:
 - Every captured fact passes the evidence threshold; no fact is clear from one file.
 - No context entry contains work-tracking provenance or a detailed explanation instead of a current fact.
 - No context claim contradicts the current code or another context file.
-- All documented paths, links, commands, and symbols resolve when they are expected to exist.
+- All documented paths, links, commands, and named public contracts resolve when expected.
 - `scripts/validate-context-lengths.sh` passes for every created or changed context file.
 - Content appears in the correct file and remains under the 500-line ceiling.
 - Unaffected valid content and project-specific organization remain intact.
