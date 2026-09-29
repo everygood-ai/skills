@@ -1,5 +1,7 @@
 # Changelog
 
+- `5.1.4` — Numbered portfolio epic directories by index order with `epic-N-slug` names.
+
 - `5.1.3` — Added maintainer documentation for plan layouts, task/phase ownership, context-update tasks, and validation handoff.
 
 - `5.1.2` — Moved the skill into the source-built package layout and converted its task-plan tone contract to pinned capability placeholders; behavior and rendered tone remain unchanged.

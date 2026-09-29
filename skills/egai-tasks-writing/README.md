@@ -33,13 +33,13 @@ plan/
 ```text
 plan/
   index.md
-  epic-authentication/
+  epic-1-authentication/
     index.md
     phase-1/
       index.md
       task-1-add-auth-schema.md
       task-2-update-context.md
-  epic-billing/
+  epic-2-billing/
     index.md
     phase-1/
       index.md
@@ -47,7 +47,7 @@ plan/
       task-2-update-context.md
 ```
 
-Each plan root — the top-level `plan/` directory in a simple plan, or each epic directory in a portfolio — owns exactly one `index.md`, and so does every `phase-N/` directory inside it. See [Layouts](SKILL.md#layouts) for the full rules.
+Each plan root — the top-level `plan/` directory in a simple plan, or each epic directory in a portfolio — owns exactly one `index.md`, and so does every `phase-N/` directory inside it. Portfolio epics use `epic-N-slug` directory names, numbered from 1 in the portfolio index's listed order. See [Layouts](SKILL.md#layouts) for the full rules.
 
 ## Task Frontmatter
 
