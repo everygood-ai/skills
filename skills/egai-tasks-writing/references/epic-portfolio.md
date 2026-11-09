@@ -22,7 +22,7 @@ Follow the header with the same phase checklist and `## References` section as t
 
 ## Portfolio `index.md`
 
-Write `index.md` at the portfolio root only when it holds more than one epic. List every epic with a checkbox for its status and its dependency on other epics. Leave phase and task detail out of the portfolio's `index.md`. That detail lives in each epic's own `index.md` and its phases' `index.md` files.
+Write `index.md` at the portfolio root only when it holds more than one epic. List every epic with a checkbox for its status and its dependency on other epics. Name each epic directory `epic-N-slug`, where `N` starts at 1 and increases in the portfolio index's listed order. Leave phase and task detail out of the portfolio's `index.md`. That detail lives in each epic's own `index.md` and its phases' `index.md` files.
 
 ```markdown
 ---
@@ -36,9 +36,9 @@ ONE OR TWO SENTENCES DESCRIBING THE PORTFOLIO'S SCOPE.
 
 ## Epics
 
-- [ ] [EPIC NAME](epic-SLUG/index.md)
+- [ ] [EPIC NAME](epic-1-SLUG/index.md)
   - **Depends on:** OTHER EPIC NAME; OMIT WHEN THIS EPIC HAS NO CROSS-EPIC DEPENDENCY
-- [ ] [EPIC NAME](epic-SLUG/index.md)
+- [ ] [EPIC NAME](epic-2-SLUG/index.md)
 ```
 
 Use `[~]` while an epic is in progress and `[x]` only when every phase in it is done. Update each epic's checkbox as work progresses. Do not duplicate a phase or task list here. A reviewer follows the epic link for that detail.

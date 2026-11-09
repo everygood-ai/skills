@@ -2,7 +2,7 @@
 name: egai-tasks-writing
 description: Create execution-ready Markdown task plans from feature requests and technical specifications. Use when asked to decompose implementation work into phased, schema-valid task files with frontmatter cards, precise scope, testable acceptance criteria, a plan index, and mandatory egai-context-curation handoffs. Supports an optional epic-portfolio layout for splitting large initiatives into independently releasable epics. Do not use for implementation or external issue-tracker management.
 metadata:
-  version: "5.1.3"
+  version: "5.1.4"
 ---
 
 # EGAI Tasks Writing
@@ -49,12 +49,12 @@ plan/
 ```text
 plan/
   index.md
-  epic-authentication/
+  epic-1-authentication/
     index.md
     phase-1/
       index.md
       task-1-....md
-  epic-billing/
+  epic-2-billing/
     index.md
     phase-1/
       index.md
@@ -63,7 +63,7 @@ plan/
 
 Write the portfolio's `index.md` only when it holds more than one epic. List every epic there with a checkbox for its status and its dependencies. Keep phase and task detail in each epic's own `index.md` and its phases' `index.md` files. Never let two plan-root `index.md` files nest inside one another's subtree. Each plan root owns exactly one, and each phase inside it owns one more of its own.
 
-Do not add an epic field to task frontmatter. The task file's path is the source of truth for which epic it belongs to. Record epic-level intent, cross-epic dependencies, and outcome in the epic's `index.md`, not in its tasks.
+Do not add an epic field to task frontmatter. The task file's path is the source of truth for which epic it belongs to. Name each epic directory `epic-N-slug`, where `N` starts at 1 and increases in portfolio-index order. Record epic-level intent, cross-epic dependencies, and outcome in the epic's `index.md`, not in its tasks.
 
 When using epic portfolio, read [the epic portfolio reference](references/epic-portfolio.md) for the portfolio and epic `index.md` templates before writing either file.
 
@@ -259,7 +259,7 @@ Confirm all of the following:
 - Every cited path exists now or is explicitly created by an earlier task.
 - Every task file lives inside a `phase-N/` directory where `N` matches the task's `phase` frontmatter field, and that `phase-N/` directory sits directly inside a plan root.
 - No task frontmatter carries an epic field, and the folder path is the only record of which epic a task belongs to.
-- Every plan root has its own `index.md`, every phase inside it has its own `index.md`, and no plan-root `index.md` nests inside another plan root's subtree.
+- Every plan root has its own `index.md`, every phase inside it has its own `index.md`, and no plan-root `index.md` nests inside another plan root's subtree. Every portfolio epic directory is `epic-N-slug`, numbered from 1 in portfolio-index order.
 - In an epic portfolio, `index.md` exists at the portfolio root only when it holds more than one epic.
 - The portfolio's `index.md` lists each epic's dependencies and a status checkbox, not phase or task detail.
 - Every phase's `index.md` lists exactly its own task files, each with a checkbox, and no task appears in more than one phase's `index.md`.
